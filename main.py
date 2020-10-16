@@ -40,18 +40,46 @@ class Case:
 
 cases = [[]]
 cases[0].append(Case(0, 0, True, False, False, True))
-cases[17].append(Case(0, 17, False, True, False, True))
+cases[0].append(Case(0, 1, True, False, False, False))
+
+for y in range(2, 5):
+    cases[0].append(Case(0, y, True, True, False, False))
+
+cases[0].append(Case(0, 5, True, False, False, False))
+
+for y in range(6, 9):
+    cases[0].append(Case(0, y, True, True, False, False))
+
+cases[0].append(Case(0, 9, True, False, True, False))
+cases[0].append(Case(0, 10, True, False, False, True))
+
+for y in range(11, 14):
+    cases[0].append(Case(0, y, True, True, False, False))
+
+cases[0].append(Case(0, 14, True, False, False, False))
+
+for y in range(15, 17):
+    cases[0].append(Case(0, y, True, True, False, False))
+
+cases[0].append(Case(0, 17, False, True, False, True))
+
 
 for x in range(1, 17):
-    cases.append(Case(x, 0, True, False, False, False))
-for x in range(1, 17):
-    cases.append(Case(x, 17, False, True, False, False))
-for y in range(1, 17):
-    cases.append(Case(0, y, False, False, False, True))
-for y in range(1, 17):
-    cases.append(Case(17, y, False, False, True, False))
+    cases[x].append(Case(x, 0, True, False, False, False))
 
-cases.append(Case(17, 17, False, True, True, False))
-cases.append(Case(17, 0, True, False, True, False))
+cases[1].append(Case(x, 0, True, False, False, False))
+
+
+
+
+
+for x in range(1, 17):
+    cases[x].append(Case(x, 17, False, True, False, False))
+
+cases[17].append(Case(17, 0, True, False, True, False))
+for y in range(1, 17):
+    cases[17].append(Case(17, y, False, False, True, False))
+
+cases[17].append(Case(17, 17, False, True, True, False))
 
 window.mainloop()
