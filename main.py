@@ -18,7 +18,7 @@ window.geometry(str(t)+"x"+str(h))
 background = tkinter.Canvas(window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
 background.pack()
 
-img = ImageTk.PhotoImage(Image.open("fantome.png"))
+fantomeImg = ImageTk.PhotoImage(Image.open("fantome.png"), height=l-10)
 
 class Mur:
     def __init__(self, x1, y1, x2, y2):
@@ -53,12 +53,13 @@ La classe fantôme représente un agent avec des coordonnées.
 """
 class Fantome:
     def __init__(self, x: int, y: int):
-        self.x = 10
-        self.y = 10
+        self.x = 500
+        self.y = 200
         self.action = Action.monter
         self.objectif = Objectif.chercher
-        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
-        background.coords(self.sprite, 100, 100)
+        self.image = fantomeImg
+        self.sprite = background.create_image(self.x, self.y, image=self.image)
+        background.pack()
     def bouger(self):
         listeActionsPossibles = [
             cases[self.y][self.x].haut == False,
