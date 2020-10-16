@@ -41,6 +41,41 @@ class Case:
             Mur((x+1)*l-e, y*l, (x+1)*l, (y+1)*l)
 
 
+"""
+La classe fantôme représente un agent avec des coordonnées.
+"""
+class Fantome:
+    def __init__(self, x: int, y: int):
+        self.x = 10
+        self.y = 10
+        self.action = Action.monter
+        self.objectif = Objectif.chercher
+        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+    def bouger(self):
+        listeActionsPossibles = [
+            cases[self.y][self.x].haut == False,
+            cases[self.y][self.x].bas == False,
+            cases[self.y][self.x].droite == False,
+            cases[self.y][self.x].gauche == False
+        ]
+        r = random.randint(0, 3)
+        while not listeActionsPossibles[r] == False:
+            r = random.randint(0, 3)
+        self.action = Action(r)
+
+
+class Action(Enum):
+    monter = 0
+    descendre = 1
+    gauche = 2
+    droite = 3
+
+class Objectif(Enum):
+    chercher = 0
+    fuir = 1
+    tuer = 2
+
+
 #Labyrinthe
 cases = []
 for x in range(0, 18):
@@ -200,5 +235,6 @@ for x in range(15, 17):
     cases[x].append(Case(x, 8, True, True, False, False, True))
 cases[17].append(Case(17, 8, False, True, True, False, True))
 
+fantome = Fantome(10, 10)
 
 window.mainloop()
