@@ -62,7 +62,36 @@ class Fantome:
         while not listeActionsPossibles[r] == False:
             r = random.randint(0, 3)
         self.action = Action(r)
+        switch(r)
 
+    
+    def switch(argument):
+    switcher = {
+        0: deplacerHaut()
+        1: deplacerBas(),
+        2: deplacerGauche(),
+        3: deplacerDroite()
+    }
+
+    def deplacerHaut():
+        self.y = x-l
+        //supp image fantome
+        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+
+    def deplacerBas():
+        self.y = x+l
+        //supp image fantome
+        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+
+    def deplacerGauche():
+        self.x = x-l
+        //supp image fantome
+        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+
+    def deplacerDroite():
+        self.x = x+l
+        //supp image fantome
+        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
 
 class Action(Enum):
     monter = 0
