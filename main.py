@@ -1,4 +1,5 @@
 import tkinter
+from enum import Enum
 
 window = tkinter.Tk()
 
@@ -37,6 +38,27 @@ class Case:
             Mur(x*l, y*l, x*l+e, (y+1)*l)
         if droite:
             Mur((x+1)*l-e, y*l, (x+1)*l, (y+1)*l)
+
+"""
+La classe fantôme représente un agent avec des coordonnées.
+"""
+class Fantome:
+    def __init__(self, x: int, y: int):
+        self.x = 10
+        self.y = 10
+        self.action = Action.monter
+        self.objectif = Objectif.chercher
+
+class Action(Enum):
+    monter = 0
+    descendre = 1
+    gauche = 2
+    droite = 3
+
+class Objectif(Enum):
+    chercher = 0
+    fuir = 1
+    tuer = 2
 
 cases = []
 
