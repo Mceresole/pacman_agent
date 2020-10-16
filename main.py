@@ -8,17 +8,18 @@ import random
 window = tkinter.Tk()
 
 t = 1008
-l = 1008/18
-h = 504 #l * 9
+l = round(1008/18)
+h = l * 9
 e = 10
 
 window.title("Pac Man")
 window.geometry(str(t)+"x"+str(h))
+window.resizable(width=False, height=False)
 
 background = tkinter.Canvas(window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
 background.pack()
 
-fantomeImg = ImageTk.PhotoImage(Image.open("fantome.png"), height=l-10)
+fantomeImg = ImageTk.PhotoImage(Image.open("fantome.png"))
 
 class Mur:
     def __init__(self, x1, y1, x2, y2):
@@ -53,13 +54,13 @@ La classe fantôme représente un agent avec des coordonnées.
 """
 class Fantome:
     def __init__(self, x: int, y: int):
-        self.x = 500
-        self.y = 200
+        self.x = 8
+        self.y = 4
         self.action = Action.monter
         self.objectif = Objectif.chercher
         self.image = fantomeImg
-        self.sprite = background.create_image(self.x, self.y, image=self.image)
-        background.pack()
+        self.sprite = background.create_rectangle(self.x*l, self.y*l, self.x*l+l, self.y*l+l, fill="#f00")#background.create_image(self.x*l, self.y*l, image=self.image)
+
     def bouger(self):
         listeActionsPossibles = [
             cases[self.y][self.x].haut == False,
@@ -71,36 +72,21 @@ class Fantome:
         while not listeActionsPossibles[r] == False:
             r = random.randint(0, 3)
         self.action = Action(r)
-        switch(r)
+        self.deplacer(r)
 
-
-    def switch(argument):
-    switcher = {
-        0: deplacerHaut()
-        1: deplacerBas(),
-        2: deplacerGauche(),
-        3: deplacerDroite()
-    }
-
-    def deplacerHaut():
-        self.y = x-l
-        //supp image fantome
-        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
-
-    def deplacerBas():
-        self.y = x+l
-        //supp image fantome
-        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
-
-    def deplacerGauche():
-        self.x = x-l
-        //supp image fantome
-        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
-
-    def deplacerDroite():
-        self.x = x+l
-        //supp image fantome
-        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+    def deplacer(self, argument):
+        if argument == 0:
+            self.y -= 1
+            background.coords(self.sprite, self.x*l, self.y*l)
+        elif argument == 1:
+            self.y += 1
+            background.coords(self.sprite, self.x*l, self.y*l)
+        elif argument == 2:
+            self.x -= 1
+            background.coords(self.sprite, self.x*l, self.y*l)
+        else:
+            self.x += 1
+            background.coords(self.sprite, self.x*l, self.y*l)
 
 class Action(Enum):
     monter = 0
@@ -151,12 +137,15 @@ cases[14].append(Case(14, 1, False, False, True, True, True))
 cases[15].append(Case(15, 1, True, True, False, True, False))
 cases[16].append(Case(16, 1, True, False, True, False, False))
 cases[17].append(Case(17, 1, False, False, True, True, True))
+
 ##ligne 3
 cases[0].append(Case(0, 2, False, False, True, True, True))
 cases[1].append(Case(1, 2, False, False, True, True, False))
 cases[2].append(Case(2, 2, True, False, False, True, True))
-for x in range(3, 5):
-    cases[x].append(Case(x, 2, False, True, False, False, True))
+
+cases[3].append(Case(3, 2, False, True, False, False, True))
+cases[4].append(Case(4, 2, True, True, False, False, True))
+
 cases[5].append(Case(5, 2, False, False, False, False, True))
 for x in range(6, 8):
     cases[x].append(Case(x, 2, True, True, False, False, True))
@@ -165,8 +154,10 @@ for x in range(8, 10):
 for x in range(10, 12):
     cases[x].append(Case(x, 2, True, True, False, False, True))
 cases[12].append(Case(12, 2, False, False, False, False, True))
-for x in range(13, 15):
-    cases[x].append(Case(x, 2, False, True, False, False, True))
+
+cases[13].append(Case(13, 2, True, True, False, False, True))
+cases[14].append(Case(14, 2, False, True, False, False, True))
+
 cases[15].append(Case(15, 2, True, False, True, False, True))
 cases[16].append(Case(16, 2, False, False, True, True, False))
 cases[17].append(Case(17, 2, False, False, True, True, True))
@@ -229,14 +220,18 @@ cases[17].append(Case(17, 5, False, False, True, True, True))
 cases[0].append(Case(0, 6, False, False, True, True, True))
 cases[1].append(Case(1, 6, False, False, True, True, False))
 cases[2].append(Case(2, 6, False, True, False, True, True))
-for x in range(3, 5):
-    cases[x].append(Case(x, 6, True, False, False, False, True))
+
+cases[3].append(Case(3, 6, True, False, False, False, True))
+cases[4].append(Case(4, 6, True, True, False, False, True))
+
 cases[5].append(Case(5, 6, False, False, False, False, True))
 for x in range(6, 12):
     cases[x].append(Case(x, 6, True, True, False, False, True))
 cases[12].append(Case(12, 6, False, False, False, False, True))
-for x in range(13, 15):
-    cases[x].append(Case(x, 6, True, False, False, False, True))
+
+cases[13].append(Case(13, 6, True, True, False, False, True))
+cases[14].append(Case(14, 6, True, False, False, False, True))
+
 cases[15].append(Case(15, 6, False, True, True, False, True))
 cases[16].append(Case(16, 6, False, False, True, True, False))
 cases[17].append(Case(17, 6, False, False, True, True, True))
@@ -275,4 +270,10 @@ cases[17].append(Case(17, 8, False, True, True, False, True))
 
 fantome = Fantome(10, 10)
 
+def motion():
+    global fantome
+    fantome.bouger()
+    window.after(10, motion)
+
+motion()
 window.mainloop()
