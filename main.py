@@ -17,7 +17,7 @@ window.geometry(str(t)+"x"+str(t))
 background = tkinter.Canvas(window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
 background.pack()
 
-img = ImageTk.PhotoImage(Image.open("fantome.png"))
+fantomeImg = ImageTk.PhotoImage(Image.open("fantome.png"))
 
 class Mur:
     def __init__(self, x1, y1, x2, y2):
@@ -56,6 +56,7 @@ class Fantome:
         self.action = Action.monter
         self.objectif = Objectif.chercher
         self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+        background.coords(self.sprite, 100, 100)
     def bouger(self):
         listeActionsPossibles = [
             cases[self.y][self.x].haut == False,
