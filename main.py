@@ -38,38 +38,38 @@ class Case:
         if droite:
             Mur((x+1)*l-e, y*l, (x+1)*l, (y+1)*l)
 
-cases = [[]]
+cases = []
+
+for x in range(0, 18):
+    cases.append([])
+
 cases[0].append(Case(0, 0, True, False, False, True))
-cases[0].append(Case(0, 1, True, False, False, False))
 
-for y in range(2, 5):
-    cases[0].append(Case(0, y, True, True, False, False))
+for x in range(1, 4):
+    cases[x].append(Case(x, 0, True, True, False, False))
 
-cases[0].append(Case(0, 5, True, False, False, False))
+cases[4].append(Case(4, 0, True, False, False, False))
 
-for y in range(6, 9):
-    cases[0].append(Case(0, y, True, True, False, False))
+for x in range(5, 8):
+    cases[x].append(Case(x, 0, True, True, False, False))
 
-cases[0].append(Case(0, 9, True, False, True, False))
-cases[0].append(Case(0, 10, True, False, False, True))
+cases[8].append(Case(8, 0, True, False, True, False))
+cases[9].append(Case(9, 0, True, False, False, True))
 
-for y in range(11, 14):
-    cases[0].append(Case(0, y, True, True, False, False))
+for x in range(10, 13):
+    cases[x].append(Case(x, 0, True, True, False, False))
 
-cases[0].append(Case(0, 14, True, False, False, False))
+cases[13].append(Case(13, 0, True, False, False, False))
 
-for y in range(15, 17):
-    cases[0].append(Case(0, y, True, True, False, False))
+for x in range(14, 17):
+    cases[x].append(Case(x, 0, True, True, False, False))
+
+cases[17].append(Case(17, 0, True, False, True, False))
+
+for y in range(1, 17):
+    cases[0].append(Case(0, y, False, False, False, True))
 
 cases[0].append(Case(0, 17, False, True, False, True))
-
-
-for x in range(1, 17):
-    cases[x].append(Case(x, 0, True, False, False, False))
-
-cases[1].append(Case(x, 0, True, False, False, False))
-
-
 
 
 
