@@ -54,7 +54,7 @@ La classe fantôme représente un agent avec des coordonnées.
 """
 class Fantome:
     def __init__(self, x: int, y: int):
-        self.x = 8
+        self.x = 9
         self.y = 4
         self.action = Action.monter
         self.objectif = Objectif.chercher
@@ -63,13 +63,13 @@ class Fantome:
 
     def bouger(self):
         listeActionsPossibles = [
-            cases[self.y][self.x].haut == False,
-            cases[self.y][self.x].bas == False,
-            cases[self.y][self.x].droite == False,
-            cases[self.y][self.x].gauche == False
+            cases[self.x][self.y].haut == True,
+            cases[self.x][self.y].bas == True,
+            cases[self.x][self.y].droite == True,
+            cases[self.x][self.y].gauche == True
         ]
         r = random.randint(0, 3)
-        while not listeActionsPossibles[r] == False:
+        while listeActionsPossibles[r] == True:
             r = random.randint(0, 3)
         self.action = Action(r)
         self.deplacer(r)
@@ -77,16 +77,16 @@ class Fantome:
     def deplacer(self, argument):
         if argument == 0:
             self.y -= 1
-            background.coords(self.sprite, self.x*l, self.y*l)
+            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
         elif argument == 1:
             self.y += 1
-            background.coords(self.sprite, self.x*l, self.y*l)
+            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
         elif argument == 2:
-            self.x -= 1
-            background.coords(self.sprite, self.x*l, self.y*l)
-        else:
             self.x += 1
-            background.coords(self.sprite, self.x*l, self.y*l)
+            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
+        else:
+            self.x -= 1
+            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
 
 class Action(Enum):
     monter = 0
@@ -272,8 +272,11 @@ fantome = Fantome(10, 10)
 
 def motion():
     global fantome
+    ticks = 1
+    print(ticks, fantome.x, fantome.y)
     fantome.bouger()
-    window.after(10, motion)
+    ticks += 1
+    window.after(100, motion)
 
 motion()
 window.mainloop()
