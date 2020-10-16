@@ -7,10 +7,10 @@ import random
 
 window = tkinter.Tk()
 
-t = 1008
-l = round(1008/18)
-h = l * 9
-e = 10
+t = 1008 # taille
+l = round(1008/18) # case
+h = l * 9 # hauteur
+e = 10 # epaisseur
 
 window.title("Pac Man")
 window.geometry(str(t)+"x"+str(h))
@@ -60,7 +60,7 @@ class Fantome:
         self.action = Action.monter
         self.objectif = Objectif.chercher
         self.image = fantomeImg
-        self.sprite = background.create_image(self.x*l, self.y*l, image=self.image, )
+        self.sprite = background.create_image(self.x*l+e, self.y*l+e, image=self.image)
 
     def bouger(self):
         listeActionsPossibles = [
@@ -70,7 +70,7 @@ class Fantome:
             cases[self.x][self.y].gauche == True
         ]
         r = random.randint(0, 3)
-        while listeActionsPossibles[r] == True:
+        while listeActionsPossibles[r]:
             r = random.randint(0, 3)
         self.action = Action(r)
         self.deplacer(r)
@@ -78,16 +78,14 @@ class Fantome:
     def deplacer(self, argument):
         if argument == 0:
             self.y -= 1
-            background.coords(self.sprite, self.x*l, self.y*l)
         elif argument == 1:
             self.y += 1
-            background.coords(self.sprite, self.x*l, self.y*l)
         elif argument == 2:
             self.x += 1
-            background.coords(self.sprite, self.x*l, self.y*l)
         else:
             self.x -= 1
-            background.coords(self.sprite, self.x*l, self.y*l)
+        background.coords(self.sprite, self.x*l, self.y*l)
+
 
 class Action(Enum):
     monter = 0
@@ -277,7 +275,7 @@ def motion():
     print(ticks, fantome.x, fantome.y)
     fantome.bouger()
     ticks += 1
-    window.after(100, motion)
+    window.after(10, motion)
 
 motion()
 window.mainloop()
