@@ -1,5 +1,9 @@
+#! python3
+
 import tkinter
+from PIL import ImageTk, Image
 from enum import Enum
+import random
 
 window = tkinter.Tk()
 
@@ -13,6 +17,8 @@ window.geometry(str(t)+"x"+str(t))
 background = tkinter.Canvas(window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
 background.pack()
 
+img = ImageTk.PhotoImage(Image.open("fantome.png"))
+
 class Mur:
     def __init__(self, x1, y1, x2, y2):
         self.x1 = x1
@@ -23,13 +29,14 @@ class Mur:
 
 class Case:
     # constructeur
-    def __init__(self, x: int, y: int, haut: bool, bas: bool, droite: bool, gauche: bool):
+    def __init__(self, x: int, y: int, haut: bool, bas: bool, droite: bool, gauche: bool, gomme: bool = True):
         self.x = x # coordonnées case
         self.y = y
         self.haut = haut # murs en haut?
         self.bas = bas
         self.gauche = gauche
         self.droite = droite
+        self.gomme = gomme
         if haut:
             Mur(x*l, y*l, (x+1)*l, y*l+e)
         if bas:
@@ -48,6 +55,19 @@ class Fantome:
         self.y = 10
         self.action = Action.monter
         self.objectif = Objectif.chercher
+        self.sprite = background.create_image(self.x, self.y, image=fantomeImg)
+    def bouger(self):
+        listeActionsPossibles = [
+            cases[self.y][self.x].haut == False,
+            cases[self.y][self.x].bas == False,
+            cases[self.y][self.x].droite == False,
+            cases[self.y][self.x].gauche == False
+        ]
+        r = random.randint(0, 3)
+        while not listeActionsPossibles[r] == False:
+            r = random.randint(0, 3)
+        self.action = Action(r)
+
 
 class Action(Enum):
     monter = 0
@@ -103,5 +123,7 @@ for y in range(1, 17):
     cases[17].append(Case(17, y, False, False, True, False))
 
 cases[17].append(Case(17, 17, False, True, True, False))
+
+fantome = Fantome(10, 10)
 
 window.mainloop()
