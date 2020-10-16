@@ -19,7 +19,8 @@ window.resizable(width=False, height=False)
 background = tkinter.Canvas(window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
 background.pack()
 
-fantomeImg = ImageTk.PhotoImage(Image.open("fantome.png"))
+fantomeImg = Image.open("fantome.jpg").resize((int(l/2), int(l/2)), resample=0)
+fantomeImg = ImageTk.PhotoImage(fantomeImg)
 
 class Mur:
     def __init__(self, x1, y1, x2, y2):
@@ -59,7 +60,7 @@ class Fantome:
         self.action = Action.monter
         self.objectif = Objectif.chercher
         self.image = fantomeImg
-        self.sprite = background.create_rectangle(self.x*l, self.y*l, self.x*l+l, self.y*l+l, fill="#f00")#background.create_image(self.x*l, self.y*l, image=self.image)
+        self.sprite = background.create_image(self.x*l, self.y*l, image=self.image, )
 
     def bouger(self):
         listeActionsPossibles = [
@@ -77,16 +78,16 @@ class Fantome:
     def deplacer(self, argument):
         if argument == 0:
             self.y -= 1
-            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
+            background.coords(self.sprite, self.x*l, self.y*l)
         elif argument == 1:
             self.y += 1
-            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
+            background.coords(self.sprite, self.x*l, self.y*l)
         elif argument == 2:
             self.x += 1
-            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
+            background.coords(self.sprite, self.x*l, self.y*l)
         else:
             self.x -= 1
-            background.coords(self.sprite, self.x*l, self.y*l, self.x*l+l, self.y*l+l)
+            background.coords(self.sprite, self.x*l, self.y*l)
 
 class Action(Enum):
     monter = 0
