@@ -137,14 +137,14 @@ class Fantome:
                 if not test:
                     return Action.gauche # => on va a droite
         listeActionsPossibles = [
-            cases[self.x][self.y].haut == True,
+            cases[self.x][self.y].haut == True, # mur == true => true
             cases[self.x][self.y].bas == True,
             cases[self.x][self.y].droite == True,
             cases[self.x][self.y].gauche == True
         ]
-        r = random.randint(0, 3)
-        while listeActionsPossibles[r]:
-            r = random.randint(0, 3)
+        r = random.randint(0, 3) # aléatoire
+        while listeActionsPossibles[r]: # si mur == true
+            r = random.randint(0, 3) # => relance aléatoire
         return Action(r)
 
     def deplacer(self, argument):
@@ -164,8 +164,8 @@ class Fantome:
 class Action(Enum):
     monter = 0
     descendre = 1
-    gauche = 2
-    droite = 3
+    droite = 2
+    gauche = 3
 
 """
 Énumération des objectifs de l'agent
