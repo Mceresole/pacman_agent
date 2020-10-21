@@ -58,8 +58,8 @@ La classe pacman ......
 """
 class PacMan:
     def __init__(self):
-        self.x = 0;
-        self.y = 0;
+        self.x = 0
+        self.y = 0
         self.image = pacmanImg
         self.action = Action.monter
         self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
@@ -84,6 +84,11 @@ class PacMan:
             self.x -= 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
 
+    def mourrir(self):
+        background.delete(self.sprite)
+        self = 0
+        print("Perdu.")
+
 """
 La classe fantôme représente un agent avec des coordonnées.
 """
@@ -97,9 +102,11 @@ class Fantome:
         self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
 
     def bouger(self):
-        self.action = self.chercher()
-        self.deplacer(self.action)
+        self.action = self.chercher() # cherche pacman
+        self.deplacer(self.action) # effectue le déplacement
+        self.tuer() # essaye de tuer pacman
 
+    # objectif: chercher pacman
     def chercher(self):
         test = False
         if pacman.x == self.x: # si pacman meme colonne que fantome
@@ -147,6 +154,13 @@ class Fantome:
             r = random.randint(0, 3) # => relance aléatoire
         return Action(r)
 
+    # objectif: tuer pacman
+    def tuer(self):
+        if pacman.x == self.x and pacman.y == self.y:
+            pacman.mourrir()
+
+
+    # action: monter, descendre, droite, gauche
     def deplacer(self, argument):
         if argument == Action.monter:
             self.y -= 1
@@ -345,13 +359,18 @@ for x in range(15, 17):
 cases[17].append(Case(17, 8, False, True, True, False, True))
 
 pacman = PacMan()
-fantome = Fantome()
+f1 = Fantome()
+f2 = Fantome()
+f3 = Fantome()
+f4 = Fantome()
 ticks = 1
 
 def motion():
-    global fantome, ticks
-    fantome.bouger()
-    print(fantome.action, fantome.x, fantome.y, pacman.x, pacman.y)
+    global f1, ticks
+    f1.bouger()
+    f2.bouger()
+    f3.bouger()
+    f4.bouger()
     ticks += 1
     window.after(1000, motion)
 
