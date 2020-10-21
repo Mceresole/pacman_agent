@@ -97,28 +97,85 @@ class Fantome:
         self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
 
     def bouger(self):
+        self.action = self.chercher()
+        self.deplacer(self.action)
+
+    def chercher(self):
+        test = False
+        if pacman.x == self.x: # si pacman meme colonne que fantome
+            if pacman.y > self.y: # si fantome plus haut que pacman
+                i = self.y
+                while i < pacman.y and test == False: # est-ce que ya des murs entre ?
+                    if cases[self.x][i].bas:
+                        test = True # => oui
+                    i += 1
+                if not test:
+                    return Action.descendre # => non donc on descend
+            else: # sinon fantome plus bas
+                i = pacman.y
+                while i < self.y and test == False:
+                    if cases[self.x][i].bas:
+                        test = True
+                    i += 1
+                if not test:
+                    return Action.monter # => donc on monte
+        if pacman.y == self.y:
+            if pacman.x > self.x:
+                i = self.x
+                while i < pacman.x and test == False:
+                    if cases[i][self.y].droite:
+                        test = True
+                    i += 1
+                if not test:
+                    return Action.droite # => on va a droite
+            else:
+                i = pacman.x
+                while i < self.x and test == False:
+                    if cases[i][self.y].droite:
+                        test = True
+                    i += 1
+                if not test:
+                    return Action.gauche # => on va a droite
         listeActionsPossibles = [
             cases[self.x][self.y].haut == True,
             cases[self.x][self.y].bas == True,
             cases[self.x][self.y].droite == True,
             cases[self.x][self.y].gauche == True
         ]
+        print(listeActionsPossibles)
         r = random.randint(0, 3)
         while listeActionsPossibles[r]:
             r = random.randint(0, 3)
-        self.action = Action(r)
-        self.deplacer(r)
+        return Action(r)
 
     def deplacer(self, argument):
-        if argument == 0:
+        if argument == Action.monter:
             self.y -= 1
-        elif argument == 1:
+        elif argument == Action.descendre:
             self.y += 1
-        elif argument == 2:
+        elif argument == Action.droite:
             self.x += 1
         else:
             self.x -= 1
         background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+
+"""
+      else
+          i = pacman.y
+          if(case(x, i).bas == true)
+              test = true
+          i++
+          while(i < fantome.y && test == false){
+              if(case(x, i).bas == true)
+                  test = true
+              if(case(x, i).haut == true)
+                  test = true
+              i++
+          }
+          if(case(x, i).heut == true)
+              test = true
+      }
+"""
 
 
 class Action(Enum):
@@ -308,8 +365,9 @@ ticks = 1
 def motion():
     global fantome, ticks
     fantome.bouger()
+    print(fantome.action, fantome.x, fantome.y, pacman.x, pacman.y)
     ticks += 1
-    window.after(int(1000/FPS), motion)
+    window.after(1000, motion)
 
 window.bind("<Up>", pacman.goUp)
 window.bind("<Down>", pacman.goDown)
