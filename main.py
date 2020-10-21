@@ -11,6 +11,8 @@ t = 1008 # taille
 l = round(1008/18) # case
 h = l * 9 # hauteur
 e = 10 # epaisseur
+FPS = 60
+
 
 window.title("Pac Man")
 window.geometry(str(t)+"x"+str(h))
@@ -19,6 +21,8 @@ window.resizable(width=False, height=False)
 background = tkinter.Canvas(window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
 background.pack()
 
+pacmanImg = Image.open("pacman.jpg").resize((int(l/2), int(l/2)), resample=0)
+pacmanImg = ImageTk.PhotoImage(pacmanImg)
 fantomeImg = Image.open("fantome.jpg").resize((int(l/2), int(l/2)), resample=0)
 fantomeImg = ImageTk.PhotoImage(fantomeImg)
 
@@ -49,18 +53,48 @@ class Case:
         if droite:
             Mur((x+1)*l-e, y*l, (x+1)*l, (y+1)*l)
 
+"""
+La classe pacman ......
+"""
+class PacMan:
+    def __init__(self):
+        self.x = 0;
+        self.y = 0;
+        self.image = pacmanImg
+        self.action = Action.monter
+        self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
+
+    def goUp(self, event):
+        if not cases[self.x][self.y].haut:
+            self.y -= 1
+            background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+
+    def goDown(self, event):
+        if not cases[self.x][self.y].bas:
+            self.y += 1
+            background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+
+    def goRight(self, event):
+        if not cases[self.x][self.y].droite:
+            self.x += 1
+            background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+
+    def goLeft(self, event):
+        if not cases[self.x][self.y].gauche:
+            self.x -= 1
+            background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
 
 """
 La classe fantôme représente un agent avec des coordonnées.
 """
 class Fantome:
-    def __init__(self, x: int, y: int):
+    def __init__(self):
         self.x = 9
         self.y = 4
         self.action = Action.monter
         self.objectif = Objectif.chercher
         self.image = fantomeImg
-        self.sprite = background.create_image(self.x*l+e, self.y*l+e, image=self.image)
+        self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
 
     def bouger(self):
         listeActionsPossibles = [
@@ -84,7 +118,7 @@ class Fantome:
             self.x += 1
         else:
             self.x -= 1
-        background.coords(self.sprite, self.x*l, self.y*l)
+        background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
 
 
 class Action(Enum):
@@ -267,15 +301,20 @@ for x in range(15, 17):
     cases[x].append(Case(x, 8, True, True, False, False, True))
 cases[17].append(Case(17, 8, False, True, True, False, True))
 
-fantome = Fantome(10, 10)
+pacman = PacMan()
+fantome = Fantome()
+ticks = 1
 
 def motion():
-    global fantome
-    ticks = 1
-    print(ticks, fantome.x, fantome.y)
+    global fantome, ticks
     fantome.bouger()
     ticks += 1
-    window.after(10, motion)
+    window.after(int(1000/FPS), motion)
+
+window.bind("<Up>", pacman.goUp)
+window.bind("<Down>", pacman.goDown)
+window.bind("<Right>", pacman.goRight)
+window.bind("<Left>", pacman.goLeft)
 
 motion()
 window.mainloop()
