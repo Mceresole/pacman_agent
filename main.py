@@ -142,7 +142,6 @@ class Fantome:
             cases[self.x][self.y].droite == True,
             cases[self.x][self.y].gauche == True
         ]
-        print(listeActionsPossibles)
         r = random.randint(0, 3)
         while listeActionsPossibles[r]:
             r = random.randint(0, 3)
@@ -160,30 +159,17 @@ class Fantome:
         background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
 
 """
-      else
-          i = pacman.y
-          if(case(x, i).bas == true)
-              test = true
-          i++
-          while(i < fantome.y && test == false){
-              if(case(x, i).bas == true)
-                  test = true
-              if(case(x, i).haut == true)
-                  test = true
-              i++
-          }
-          if(case(x, i).heut == true)
-              test = true
-      }
+Énumération des actions de l'agent
 """
-
-
 class Action(Enum):
     monter = 0
     descendre = 1
     gauche = 2
     droite = 3
 
+"""
+Énumération des objectifs de l'agent
+"""
 class Objectif(Enum):
     chercher = 0
     fuir = 1
