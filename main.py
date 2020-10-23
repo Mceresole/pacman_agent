@@ -11,7 +11,8 @@ t = 1008 # taille
 l = round(1008/18) # case
 h = l * 9 # hauteur
 e = 10 # epaisseur
-FPS = 60
+FPS = tkinter.IntVar()
+FPS.set(1)
 
 
 window.title("Pac Man")
@@ -114,7 +115,7 @@ class PacMan:
     def mourrir(self):
         background.delete(self.sprite)
         self = 0
-        print("Perdu.")
+        statusPartie.set("perdu !")
 
 """
 La classe fantôme représente un agent avec des coordonnées.
@@ -395,12 +396,47 @@ def motion():
     f3.bouger()
     f4.bouger()
     ticks += 1
-    window.after(1000, motion)
+    if statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
+        return False
+    window.after(int(1000/FPS.get()), motion)
 
 window.bind("<Up>", pacman.goUp)
 window.bind("<Down>", pacman.goDown)
 window.bind("<Right>", pacman.goRight)
 window.bind("<Left>", pacman.goLeft)
 
-motion()
+controls = tkinter.Toplevel()
+
+controls.resizable(width = False, height = False)
+controls.title("Contrôles")
+controls.geometry("200x350")
+#controls.attributes("-toolwindow", 1)	# Enlever le bouton pour redimensionner la fenetre
+
+statusPartie = tkinter.StringVar()
+statusPartie.set("pause")
+
+class Status(Enum):
+    pause = "pause"
+    enCours = "en cours"
+    perdu = "perdu !"
+    gagne = "gagné !"
+
+def start():
+    if statusPartie.get() == Status.pause.value:
+        statusPartie.set(Status.enCours.value)
+        motion()
+    elif statusPartie.get() == Status.enCours.value:
+        statusPartie.set(Status.pause.value)
+
+
+labelPartie = tkinter.Label(controls, text="Partie: " + statusPartie.get())
+buttonPartie = tkinter.Button(controls, command=start)
+labelVitesse = tkinter.Label(controls, text="Vitesse:") # modifier vitesse
+scaleVitesse = tkinter.Scale(controls, orient=tkinter.HORIZONTAL, from_=1, to=60, length=180, variable=FPS, cursor='sb_h_double_arrow') # Curseur pour modifier les FPS
+
+labelPartie.pack()
+buttonPartie.pack()
+labelVitesse.pack()
+scaleVitesse.pack()
+
 window.mainloop()
