@@ -412,6 +412,7 @@ class Partie(object):
             f.bouger()
         Partie.ticks += 1
         if statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
+            labelPartie.set(statusPartie.get())
             return False
         window.after(int(1000/FPS.get()), Partie.motion)
 
@@ -423,9 +424,10 @@ class Partie(object):
         elif statusPartie.get() == Status.enCours.value:
             statusPartie.set(Status.pause.value)
         else:
-            statusPartie.set(Status.enCours.value)
+            statusPartie.set(Status.pause.value)
             Partie.clear()
             Partie.initialize()
+        labelPartie.set(statusPartie.get())
 
 controls = tkinter.Toplevel()
 
@@ -434,18 +436,18 @@ controls.title("Contrôles")
 controls.geometry("200x350")
 #controls.attributes("-toolwindow", 1)	# Enlever le bouton pour redimensionner la fenetre
 
+class Status(Enum):
+    pause = "Partie en pause"
+    enCours = "Partie en cours"
+    perdu = "Perdu !"
+    gagne = "Gagné !"
+
 statusPartie = tkinter.StringVar()
-statusPartie.set("pause")
+statusPartie.set(Status.pause.value)
 
 Partie.initialize()
 
-class Status(Enum):
-    pause = "pause"
-    enCours = "en cours"
-    perdu = "perdu !"
-    gagne = "gagné !"
-
-labelPartie = tkinter.Label(controls, text="Partie: " + statusPartie.get())
+labelPartie = tkinter.Label(controls, textvariable=statusPartie)
 buttonPartie = tkinter.Button(controls, command=Partie.start)
 labelVitesse = tkinter.Label(controls, text="Vitesse:") # modifier vitesse
 scaleVitesse = tkinter.Scale(controls, orient=tkinter.HORIZONTAL, from_=1, to=60, length=180, variable=FPS, cursor='sb_h_double_arrow') # Curseur pour modifier les FPS
