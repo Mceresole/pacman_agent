@@ -52,6 +52,8 @@ class Case:
             Mur(x*l, y*l, x*l+e, (y+1)*l)
         if droite:
             Mur((x+1)*l-e, y*l, (x+1)*l, (y+1)*l)
+        if gomme:
+            self.dessin_gomme = background.create_oval(self.x*l+l/2-5, self.y*l+l/2-5, self.x*l+l/2+5, self.y*l+l/2+5, fill="yellow")
 
 """
 La classe pacman ......
@@ -68,21 +70,29 @@ class PacMan:
         if not cases[self.x][self.y].haut:
             self.y -= 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+            cases[self.x][self.y].gomme = False
+            background.delete(cases[self.x][self.y].dessin_gomme)
 
     def goDown(self, event):
         if not cases[self.x][self.y].bas:
             self.y += 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+            cases[self.x][self.y].gomme = False
+            background.delete(cases[self.x][self.y].dessin_gomme)
 
     def goRight(self, event):
         if not cases[self.x][self.y].droite:
             self.x += 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+            cases[self.x][self.y].gomme = False
+            background.delete(cases[self.x][self.y].dessin_gomme)
 
     def goLeft(self, event):
         if not cases[self.x][self.y].gauche:
             self.x -= 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+            cases[self.x][self.y].gomme = False
+            background.delete(cases[self.x][self.y].dessin_gomme)
 
     def mourrir(self):
         background.delete(self.sprite)
