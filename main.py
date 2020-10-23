@@ -372,12 +372,29 @@ def motion():
     f3.bouger()
     f4.bouger()
     ticks += 1
-    window.after(1000, motion)
+    window.after(FPS, motion)
 
 window.bind("<Up>", pacman.goUp)
 window.bind("<Down>", pacman.goDown)
 window.bind("<Right>", pacman.goRight)
 window.bind("<Left>", pacman.goLeft)
+
+controls = tkinter.Toplevel()
+
+controls.resizable(width = False, height = False)
+controls.title("Contrôles")
+controls.geometry("200x350")
+#controls.attributes("-toolwindow", 1)	# Enlever le bouton pour redimensionner la fenetre
+
+labelPartie = tkinter.Label(controls, text="Jouer: ")
+buttonPartie = tkinter.Button(controls)
+labelVitesse = tkinter.Label(controls, text="Vitesse:") # modifier vitesse
+scaleVitesse = tkinter.Scale(controls, orient=tkinter.HORIZONTAL, from_=10, to=1000, length=180, variable=FPS, cursor='sb_h_double_arrow') # Curseur pour modifier les FPS
+
+labelPartie.pack()
+buttonPartie.pack()
+labelVitesse.pack()
+scaleVitesse.pack()
 
 motion()
 window.mainloop()
