@@ -65,34 +65,51 @@ class PacMan:
         self.image = pacmanImg
         self.action = Action.monter
         self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
+        self.nb_gomme = 99
 
     def goUp(self, event):
         if not cases[self.x][self.y].haut:
             self.y -= 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
-            cases[self.x][self.y].gomme = False
-            background.delete(cases[self.x][self.y].dessin_gomme)
+            if cases[self.x][self.y].gomme:
+                cases[self.x][self.y].gomme = False
+                background.delete(cases[self.x][self.y].dessin_gomme)
+                self.nb_gomme-=1
+                if self.nb_gomme == 0:
+                    print("gagner")
 
     def goDown(self, event):
         if not cases[self.x][self.y].bas:
             self.y += 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
-            cases[self.x][self.y].gomme = False
-            background.delete(cases[self.x][self.y].dessin_gomme)
+            if cases[self.x][self.y].gomme:
+                cases[self.x][self.y].gomme = False
+                background.delete(cases[self.x][self.y].dessin_gomme)
+                self.nb_gomme-=1
+                if self.nb_gomme == 0:
+                    print("gagner")
 
     def goRight(self, event):
         if not cases[self.x][self.y].droite:
             self.x += 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
-            cases[self.x][self.y].gomme = False
-            background.delete(cases[self.x][self.y].dessin_gomme)
+            if cases[self.x][self.y].gomme:
+                cases[self.x][self.y].gomme = False
+                background.delete(cases[self.x][self.y].dessin_gomme)
+                self.nb_gomme-=1
+                if self.nb_gomme == 0:
+                    print("gagner")
 
     def goLeft(self, event):
         if not cases[self.x][self.y].gauche:
             self.x -= 1
             background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
-            cases[self.x][self.y].gomme = False
-            background.delete(cases[self.x][self.y].dessin_gomme)
+            if cases[self.x][self.y].gomme:
+                cases[self.x][self.y].gomme = False
+                background.delete(cases[self.x][self.y].dessin_gomme)
+                self.nb_gomme-=1
+                if self.nb_gomme == 0:
+                    print("gagner")
 
     def mourrir(self):
         background.delete(self.sprite)
@@ -206,7 +223,7 @@ for x in range(0, 18):
     cases.append([])
 
 ##ligne 1
-cases[0].append(Case(0, 0, True, False, False, True, True))
+cases[0].append(Case(0, 0, True, False, False, True, False))
 for x in range(1, 3):
     cases[x].append(Case(x, 0, True, True, False, False, True))
 cases[3].append(Case(3, 0, True, False, True, False, True))
@@ -247,11 +264,7 @@ cases[3].append(Case(3, 2, False, True, False, False, True))
 cases[4].append(Case(4, 2, True, True, False, False, True))
 
 cases[5].append(Case(5, 2, False, False, False, False, True))
-for x in range(6, 8):
-    cases[x].append(Case(x, 2, True, True, False, False, True))
-for x in range(8, 10):
-    cases[x].append(Case(x, 2, True, False, False, False, True))
-for x in range(10, 12):
+for x in range(6, 12):
     cases[x].append(Case(x, 2, True, True, False, False, True))
 cases[12].append(Case(12, 2, False, False, False, False, True))
 
