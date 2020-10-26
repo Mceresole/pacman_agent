@@ -4,7 +4,7 @@ from Constants import l, e
 from Enumerations import Action, Status
 from main import background, statusPartie
 
-pacmanImg = Image.open("pacman.jpg").resize((int(l/2), int(l/2)), resample=0)
+pacmanImg = Image.open("images/pacman.jpg").resize((int(l/2), int(l/2)), resample=0)
 pacmanImg = ImageTk.PhotoImage(pacmanImg)
 
 """

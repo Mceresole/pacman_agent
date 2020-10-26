@@ -5,7 +5,7 @@ from Constants import l, e
 from Enumerations import Action, Objectif
 from main import background
 
-fantomeImg = Image.open("fantome.jpg").resize((int(l/2), int(l/2)), resample=0)
+fantomeImg = Image.open("images/fantome.jpg").resize((int(l/2), int(l/2)), resample=0)
 fantomeImg = ImageTk.PhotoImage(fantomeImg)
 
 """
