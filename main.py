@@ -5,15 +5,15 @@ import Partie
 import Constants
 from Enumerations import Status
 
-class App(object):
 
+class App(object):
     window = tkinter.Tk()
     FPS = tkinter.IntVar()
     background = tkinter.Canvas(window, width=Constants.t, height=Constants.t, background="#000", bd=0, highlightthickness=0)
     controls = tkinter.Toplevel()
     statusPartie = tkinter.StringVar()
     labelPartie = tkinter.Label(controls, textvariable=statusPartie)
-    buttonPartie = tkinter.Button(controls, command=Partie.start)
+    buttonPartie = tkinter.Button(controls, command=Partie.Partie.start)
     labelVitesse = tkinter.Label(controls, text="Vitesse:")  # modifier vitesse
     scaleVitesse = tkinter.Scale(controls, orient=tkinter.HORIZONTAL, from_=1, to=60, length=180, variable=FPS, cursor='sb_h_double_arrow')  # Curseur pour modifier les FPS
 
@@ -34,5 +34,6 @@ class App(object):
         App.labelVitesse.pack()
         App.scaleVitesse.pack()
         App.window.mainloop()
+
 
 App.initialize()

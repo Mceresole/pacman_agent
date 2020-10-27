@@ -3,7 +3,7 @@ from PIL import ImageTk, Image
 import Partie
 from Constants import l, e
 from Enumerations import Action, Objectif
-from main import background
+import main
 
 fantomeImg = Image.open("images/fantome.jpg").resize((int(l/2), int(l/2)), resample=0)
 fantomeImg = ImageTk.PhotoImage(fantomeImg)
@@ -18,7 +18,7 @@ class Fantome:
         self.action = Action.monter
         self.objectif = Objectif.chercher
         self.image = fantomeImg
-        self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
+        self.sprite = main.App.background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
 
     def bouger(self):
         self.action = self.chercher() # cherche pacman
@@ -89,4 +89,4 @@ class Fantome:
             self.x += 1
         else:
             self.x -= 1
-        background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+        main.App.background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
