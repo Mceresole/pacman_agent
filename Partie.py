@@ -1,7 +1,8 @@
+from App import *
 from Enumerations import Status
 import labyrinthe.Case
-import main
 import personnages.PacMan, personnages.Fantome
+
 
 """
 Object statique représentant une partie.
@@ -178,40 +179,40 @@ class Partie(object):
         Partie.cases[17].append(labyrinthe.Case.Case(17, 8, False, True, True, False, True))
         Partie.ticks = 1
         Partie.pacman = personnages.PacMan.PacMan()
-        Partie.fantomes = [Fantome() for f in range(1)]
-        main.window.bind("<Up>", Partie.pacman.goUp)
-        main.window.bind("<Down>", Partie.pacman.goDown)
-        main.window.bind("<Right>", Partie.pacman.goRight)
-        main.window.bind("<Left>", Partie.pacman.goLeft)
+        Partie.fantomes = [personnages.Fantome() for f in range(1)]
+        App.window.bind("<Up>", Partie.pacman.goUp)
+        App.window.bind("<Down>", Partie.pacman.goDown)
+        App.window.bind("<Right>", Partie.pacman.goRight)
+        App.window.bind("<Left>", Partie.pacman.goLeft)
 
     @staticmethod
     def clear():
         for x in Partie.cases:
             for y in x:
                 if y.gomme:
-                    main.background.delete(y.sprite)
-        main.background.delete(Partie.pacman.sprite)
-        [main.background.delete(f.sprite) for f in Partie.fantomes]
+                    App.background.delete(y.sprite)
+        App.background.delete(Partie.pacman.sprite)
+        [App.background.delete(f.sprite) for f in Partie.fantomes]
 
     @staticmethod
     def motion():
         for f in Partie.fantomes:
             f.bouger()
         Partie.ticks += 1
-        if main.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
-            main.labelPartie.set(main.statusPartie.get())
+        if App.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
+            App.labelPartie.set(App.statusPartie.get())
             return False
-        main.window.after(int(1000 / main.FPS.get()), Partie.motion)
+        App.window.after(int(1000 / App.FPS.get()), Partie.motion)
 
     @staticmethod
     def start():
-        if main.statusPartie.get() == Status.pause.value:
-            main.statusPartie.set(Status.enCours.value)
+        if App.statusPartie.get() == Status.pause.value:
+            App.statusPartie.set(Status.enCours.value)
             Partie.motion()
-        elif main.statusPartie.get() == Status.enCours.value:
-            main.statusPartie.set(Status.pause.value)
+        elif App.statusPartie.get() == Status.enCours.value:
+            App.statusPartie.set(Status.pause.value)
         else:
-            main.statusPartie.set(Status.pause.value)
+            App.statusPartie.set(Status.pause.value)
             Partie.clear()
             Partie.initialize()
-        main.labelPartie.set(main.statusPartie.get())
+        App.labelPartie.set(App.statusPartie.get())
