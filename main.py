@@ -99,7 +99,7 @@ class PacMan:
     def deplacer(self):
         background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))
         if Partie.cases[self.x][self.y].gomme in [Gomme.gomme, Gomme.superGomme]:
-            if Partie.cases[self.x][self.y].gomme.superGomme:
+            if Partie.cases[self.x][self.y].gomme == Gomme.superGomme:
                 self.ticks = 10
             Partie.cases[self.x][self.y].gomme = Gomme.vide
             background.delete(Partie.cases[self.x][self.y].sprite)
@@ -132,7 +132,7 @@ class Fantome:
             self.action = self.fuir()
         else:
             self.action = self.chercher()
-        print(self.x, self.y, self.objectif.name, self.action.name)
+        print(self.x, self.y, self.objectif.name, self.action.name, Partie.pacman.ticks)
         self.deplacer(self.action) # effectue le déplacement
         self.tuer() # essaye de tuer pacman
 
