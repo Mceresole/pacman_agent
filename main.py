@@ -11,7 +11,6 @@ t = 1008 # taille
 l = round(1008/18) # case
 h = l * 9 # hauteur
 e = 10 # epaisseur
-FPS = 20
 
 
 window.title("Pac Man")
@@ -126,6 +125,7 @@ class Fantome:
         self.objectif = Objectif.chercher
         self.image = fantomeImg
         self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
+        self.deplacer(Action.monter)
 
     def bouger(self):
         self.action = self.chercher() # cherche pacman
@@ -169,14 +169,19 @@ class Fantome:
                     i += 1
                 if not test:
                     return Action.gauche # => on va a droite
+        """
+        déplacement aléatoire:
+            - si action mémorisé et déplacement possible => la meme action
+            - sinon aléatoire
+        """
         listeActionsPossibles = [
             Partie.cases[self.x][self.y].haut == True, # mur == true => true
-            Partie.cases[self.x][self.y].bas == True,
             Partie.cases[self.x][self.y].droite == True,
-            Partie.cases[self.x][self.y].gauche == True
+            Partie.cases[self.x][self.y].gauche == True,
+            Partie.cases[self.x][self.y].bas == True
         ]
         r = random.randint(0, 3) # aléatoire
-        while listeActionsPossibles[r]: # si mur == true
+        while listeActionsPossibles[r] or self.action.value + r == 3: # si mur == true
             r = random.randint(0, 3) # => relance aléatoire
         return Action(r)
 
@@ -203,9 +208,9 @@ class Fantome:
 """
 class Action(Enum):
     monter = 0
-    descendre = 1
-    droite = 2
-    gauche = 3
+    descendre = 3
+    droite = 1
+    gauche = 2
 
 """
 Énumération des objectifs de l'agent
@@ -413,7 +418,7 @@ class Partie(object):
         if statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
             labelPartie.set(statusPartie.get())
             return False
-        window.after(int(1000/FPS), Partie.motion)
+        window.after(100, Partie.motion)
 
     @staticmethod
     def start():
