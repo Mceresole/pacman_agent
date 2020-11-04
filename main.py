@@ -490,6 +490,8 @@ class Partie(object):
         for f in Partie.fantomes:
             if Partie.pacman.ticks != 0:
                 f.objectif = Objectif.fuir
+            elif f.objectif == Objectif.fuir:
+                f.objectif = Objectif.chercher
             f.bouger()
         Partie.ticks += 1
         if Partie.pacman.ticks != 0:
