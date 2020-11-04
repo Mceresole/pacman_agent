@@ -4,8 +4,10 @@ from Constants import l, e
 from Enumerations import Action, Status
 from App import *
 
+
 pacmanImg = Image.open("images/pacman.jpg").resize((int(l/2), int(l/2)), resample=0)
 pacmanImg = ImageTk.PhotoImage(pacmanImg)
+
 
 """
 La classe pacman ......

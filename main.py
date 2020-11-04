@@ -1,5 +1,5 @@
 #! python3
 
-import App
+from App import App
 
-App.initialize()
+app = App()

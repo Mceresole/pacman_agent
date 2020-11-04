@@ -5,8 +5,10 @@ from Constants import l, e
 from Enumerations import Action, Objectif
 from App import *
 
+
 fantomeImg = Image.open("images/fantome.jpg").resize((int(l/2), int(l/2)), resample=0)
 fantomeImg = ImageTk.PhotoImage(fantomeImg)
+
 
 """
 La classe fantôme représente un agent avec des coordonnées.
