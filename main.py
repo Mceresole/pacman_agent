@@ -75,6 +75,7 @@ class PacMan:
         self.sprite = background.create_image(self.x*l+(3*e), self.y*l+(3*e), image=self.image)
         self.nb_gomme = 99
         self.ticks = 0
+        self.alive = true
 
     def monter(self, event):
         if not Partie.cases[self.x][self.y].haut:
@@ -275,7 +276,8 @@ class Fantome:
             self.x -= 1
         background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
         if Partie.pacman.x == self.x and Partie.pacman.y == self.y and Objectif.fuir:
-            self.init()
+            background.delet(self)
+            self.alive = false
 
 """
 Énumération des actions de l'agent
@@ -493,6 +495,12 @@ class Partie(object):
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
             f.bouger()
+
+            if not f.alive :
+                Partie.fantomes.remove(f)
+                newF = Fantome.__init__()
+                Partie.fantomes.append( newF)
+
         Partie.ticks += 1
         if Partie.pacman.ticks != 0:
             Partie.pacman.ticks -= 1
