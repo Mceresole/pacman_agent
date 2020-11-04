@@ -11,8 +11,7 @@ t = 1008 # taille
 l = round(1008/18) # case
 h = l * 9 # hauteur
 e = 10 # epaisseur
-FPS = tkinter.IntVar()
-FPS.set(1)
+FPS = 20
 
 
 window.title("Pac Man")
@@ -414,7 +413,7 @@ class Partie(object):
         if statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
             labelPartie.set(statusPartie.get())
             return False
-        window.after(int(1000/FPS.get()), Partie.motion)
+        window.after(int(1000/FPS), Partie.motion)
 
     @staticmethod
     def start():
@@ -449,12 +448,8 @@ Partie.initialize()
 
 labelPartie = tkinter.Label(controls, textvariable=statusPartie)
 buttonPartie = tkinter.Button(controls, command=Partie.start)
-labelVitesse = tkinter.Label(controls, text="Vitesse:") # modifier vitesse
-scaleVitesse = tkinter.Scale(controls, orient=tkinter.HORIZONTAL, from_=1, to=60, length=180, variable=FPS, cursor='sb_h_double_arrow') # Curseur pour modifier les FPS
 
 labelPartie.pack()
 buttonPartie.pack()
-labelVitesse.pack()
-scaleVitesse.pack()
 
 window.mainloop()
