@@ -266,6 +266,8 @@ class Fantome:
         else:
             self.x -= 1
         background.coords(self.sprite, self.x*l+(3*e), self.y*l+(3*e))
+        if Partie.pacman.x == self.x and Partie.pacman.y == self.y and Objectif.fuir:
+            self.init()
 
 """
 Énumération des actions de l'agent
