@@ -207,6 +207,8 @@ class Fantome:
                     if Partie.cases[self.x][i].bas:
                         test = True # => oui
                     i += 1
+                if Partie.cases[self.x][self.y].haut:
+                    test = True
                 if not test:
                     return Action.monter # => non donc on descend
             else: # sinon fantome plus bas
@@ -215,6 +217,8 @@ class Fantome:
                     if Partie.cases[self.x][i].bas:
                         test = True
                     i += 1
+                if Partie.cases[self.x][self.y].bas:
+                    test = True
                 if not test:
                     return Action.descendre # => donc on monte
         if Partie.pacman.y == self.y:
@@ -224,6 +228,8 @@ class Fantome:
                     if Partie.cases[i][self.y].droite:
                         test = True
                     i += 1
+                if Partie.cases[self.x][self.y].gauche: 
+                    test = True
                 if not test:
                     return Action.gauche # => on va a droite
             else:
@@ -232,6 +238,8 @@ class Fantome:
                     if Partie.cases[i][self.y].droite:
                         test = True
                     i += 1
+                if Partie.cases[self.x][self.y].droite:
+                    test = True
                 if not test:
                     return Action.droite # => on va a droite
         """
