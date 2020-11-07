@@ -1,4 +1,4 @@
-import main
+import App
 
 
 class Mur:
@@ -7,4 +7,4 @@ class Mur:
         self.x2 = x2
         self.y1 = y1
         self.y2 = y2
-        main.background.create_rectangle(x1, y1, x2, y2, fill="#fff", outline="#fff")
+        App.App.background.create_rectangle(x1, y1, x2, y2, fill="#fff", outline="#fff")

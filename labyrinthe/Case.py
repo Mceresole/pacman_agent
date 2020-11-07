@@ -1,6 +1,6 @@
 import Constants
 import labyrinthe.Mur
-import main
+import App
 
 
 class Case:
@@ -22,4 +22,4 @@ class Case:
         if droite:
             labyrinthe.Mur.Mur((x + 1) * Constants.l - Constants.e, y * Constants.l, (x + 1) * Constants.l, (y + 1) * Constants.l)
         if gomme:
-            self.sprite = main.background.create_oval(self.x * Constants.l + Constants.l / 2 - 5, self.y * Constants.l + Constants.l / 2 - 5, self.x * Constants.l + Constants.l / 2 + 5, self.y * Constants.l + Constants.l / 2 + 5, fill="yellow")
+            self.sprite = App.App.background.create_oval(self.x * Constants.l + Constants.l / 2 - 5, self.y * Constants.l + Constants.l / 2 - 5, self.x * Constants.l + Constants.l / 2 + 5, self.y * Constants.l + Constants.l / 2 + 5, fill="yellow")

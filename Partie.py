@@ -179,7 +179,7 @@ class Partie(object):
         Partie.cases[17].append(labyrinthe.Case.Case(17, 8, False, True, True, False, True))
         Partie.ticks = 1
         Partie.pacman = personnages.PacMan.PacMan()
-        Partie.fantomes = [personnages.Fantome() for f in range(1)]
+        Partie.fantomes = [personnages.Fantome.Fantome() for f in range(1)]
         App.App.window.bind("<Up>", Partie.pacman.goUp)
         App.App.window.bind("<Down>", Partie.pacman.goDown)
         App.App.window.bind("<Right>", Partie.pacman.goRight)

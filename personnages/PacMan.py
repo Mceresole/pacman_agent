@@ -4,8 +4,6 @@ import Constants
 import Enumerations
 import App
 
-pacmanImg = Image.open("images/pacman.jpg").resize((int(Constants.l / 2), int(Constants.l / 2)), resample=0)
-pacmanImg = ImageTk.PhotoImage(pacmanImg)
 
 """
 La classe pacman ......
@@ -14,6 +12,8 @@ class PacMan:
     def __init__(self):
         self.x = 0
         self.y = 0
+        pacmanImg = Image.open("images/pacman.jpg").resize((int(Constants.l / 2), int(Constants.l / 2)), resample=0)
+        pacmanImg = ImageTk.PhotoImage(pacmanImg)
         self.image = pacmanImg
         self.action = Enumerations.Action.monter
         self.sprite = App.App.background.create_image(self.x * Constants.l + (3 * Constants.e), self.y * Constants.l + (3 * Constants.e), image=self.image)
