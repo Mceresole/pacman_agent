@@ -3,6 +3,7 @@ import Partie
 import Constants
 import Enumerations
 import App
+import labyrinthe.Gomme
 
 
 """
@@ -16,53 +17,41 @@ class PacMan:
         pacmanImg = ImageTk.PhotoImage(pacmanImg)
         self.image = pacmanImg
         self.action = Enumerations.Action.monter
-        self.sprite = App.App.background.create_image(self.x * Constants.l + (3 * Constants.e), self.y * Constants.l + (3 * Constants.e), image=self.image)
+        self.sprite = App.App.background.create_image(self.x*Constants.l+(3*Constants.e), self.y*Constants.l+(3*Constants.e), image=self.image)
         self.nb_gomme = 99
+        self.ticks = 0
 
-    def goUp(self, event):
+    def monter(self, event):
         if not Partie.Partie.cases[self.x][self.y].haut:
             self.y -= 1
-            App.App.background.coords(self.sprite, self.x * Constants.l + (3 * Constants.e), self.y * Constants.l + (3 * Constants.e))
-            if Partie.Partie.cases[self.x][self.y].gomme:
-                Partie.Partie.cases[self.x][self.y].gomme = False
-                App.App.background.delete(Partie.Partie.cases[self.x][self.y].sprite)
-                self.nb_gomme-=1
-                if self.nb_gomme == 0:
-                    App.App.statusPartie.set(App.Status.gagne.value)
+        self.deplacer()
 
-    def goDown(self, event):
+    def descendre(self, event):
         if not Partie.Partie.cases[self.x][self.y].bas:
             self.y += 1
-            App.App.background.coords(self.sprite, self.x * Constants.l + (3 * Constants.e), self.y * Constants.l + (3 * Constants.e))
-            if Partie.Partie.cases[self.x][self.y].gomme:
-                Partie.Partie.cases[self.x][self.y].gomme = False
-                App.App.background.delete(Partie.Partie.cases[self.x][self.y].sprite)
-                self.nb_gomme-=1
-                if self.nb_gomme == 0:
-                    App.App.statusPartie.set(App.Status.gagne.value)
+        self.deplacer()
 
-    def goRight(self, event):
+    def droite(self, event):
         if not Partie.Partie.cases[self.x][self.y].droite:
             self.x += 1
-            App.App.background.coords(self.sprite, self.x * Constants.l + (3 * Constants.e), self.y * Constants.l + (3 * Constants.e))
-            if Partie.Partie.cases[self.x][self.y].gomme:
-                Partie.Partie.cases[self.x][self.y].gomme = False
-                App.App.background.delete(Partie.Partie.cases[self.x][self.y].sprite)
-                self.nb_gomme-=1
-                if self.nb_gomme == 0:
-                    App.App.statusPartie.set(App.Status.gagne.value)
+        self.deplacer()
 
-    def goLeft(self, event):
+    def gauche(self, event):
         if not Partie.Partie.cases[self.x][self.y].gauche:
             self.x -= 1
-            App.App.background.coords(self.sprite, self.x * Constants.l + (3 * Constants.e), self.y * Constants.l + (3 * Constants.e))
-            if Partie.Partie.cases[self.x][self.y].gomme:
-                Partie.Partie.cases[self.x][self.y].gomme = False
-                App.App.background.delete(Partie.Partie.cases[self.x][self.y].sprite)
-                self.nb_gomme-=1
-                if self.nb_gomme == 0:
-                    App.App.statusPartie.set(App.Status.gagne.value)
+        self.deplacer()
+
+    def deplacer(self):
+        App.App.background.coords(self.sprite, self.x*Constants.l + (3*Constants.e), self.y*Constants.l + (3*Constants.e))
+        if Partie.Partie.cases[self.x][self.y].gomme in [labyrinthe.Gomme.Gomme.gomme, labyrinthe.Gomme.Gomme.superGomme]:
+            if Partie.Partie.cases[self.x][self.y].gomme == labyrinthe.Gomme.Gomme.superGomme:
+                self.ticks = 10
+            Partie.Partie.cases[self.x][self.y].gomme = labyrinthe.Gomme.Gomme.vide
+            App.App.background.delete(Partie.Partie.cases[self.x][self.y].sprite)
+            self.nb_gomme -= 1
+            if self.nb_gomme == 0:
+                App.App.statusPartie.set(Enumerations.Status.gagne.value)
 
     def mourrir(self):
         App.App.background.delete(self.sprite)
-        App.App.statusPartie.set(App.Status.perdu.value)
+        App.App.statusPartie.set(Enumerations.Status.perdu.value)

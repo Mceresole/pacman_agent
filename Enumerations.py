@@ -16,6 +16,7 @@ class Objectif(Enum):
     chercher = 0
     fuir = 1
     tuer = 2
+    sortir = 3
 
 class Status(Enum):
     pause = "Partie en pause"
