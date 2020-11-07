@@ -1,11 +1,12 @@
-import Constants
-import labyrinthe.Mur, labyrinthe.Gomme
-import App
+from Constants import e, l
+from labyrinthe.Gomme import Gomme
+from labyrinthe.Mur import Mur
 
 
 class Case:
     # constructeur
-    def __init__(self, x: int, y: int, haut: bool, bas: bool, droite: bool, gauche: bool, gomme):
+    def __init__(self, x: int, y: int, haut: bool, bas: bool, droite: bool, gauche: bool, gomme, background):
+        self.background = background
         self.x = x # coordonnées case
         self.y = y
         self.haut = haut # murs en haut?
@@ -14,14 +15,14 @@ class Case:
         self.droite = droite
         self.gomme = gomme
         if haut:
-            labyrinthe.Mur.Mur(x*Constants.l, y*Constants.l, (x+1)*Constants.l, y*Constants.l+Constants.e)
+            Mur(x * l, y * l, (x + 1) * l, y * l + e, self.background)
         if bas:
-            labyrinthe.Mur.Mur(x*Constants.l, (y+1)*Constants.l-Constants.e, (x+1)*Constants.l, (y+1)*Constants.l)
+            Mur(x * l, (y + 1) * l - e, (x + 1) * l, (y + 1) * l, self.background)
         if gauche:
-            labyrinthe.Mur.Mur(x*Constants.l, y*Constants.l, x*Constants.l+Constants.e, (y+1)*Constants.l)
+            Mur(x * l, y * l, x * l + e, (y + 1) * l, self.background)
         if droite:
-            labyrinthe.Mur.Mur((x+1)*Constants.l-Constants.e, y*Constants.l, (x+1)*Constants.l, (y+1)*Constants.l)
-        if gomme == labyrinthe.Gomme.Gomme.gomme:
-            self.sprite = App.App.background.create_oval(self.x*Constants.l + Constants.l/2 - 5, self.y * Constants.l + Constants.l/2 - 5, self.x*Constants.l + Constants.l/ 2 + 5, self.y*Constants.l + Constants.l/2 + 5, fill="yellow")
-        if gomme == labyrinthe.Gomme.Gomme.superGomme:
-            self.sprite = App.App.background.create_oval(self.x*Constants.l + Constants.l/2 - 10, self.y*Constants.l + Constants.l/2 - 10, self.x*Constants.l + Constants.l/2 + 10, self.y*Constants.l + Constants.l/2 + 10, fill="yellow")
+            Mur((x + 1) * l - e, y * l, (x + 1) * l, (y + 1) * l, self.background)
+        if gomme == Gomme.gomme:
+            self.sprite = self.background.create_oval(self.x * l + l / 2 - 5, self.y * l + l / 2 - 5, self.x * l + l / 2 + 5, self.y * l + l / 2 + 5, fill="yellow")
+        if gomme == Gomme.superGomme:
+            self.sprite = self.background.create_oval(self.x * l + l / 2 - 10, self.y * l + l / 2 - 10, self.x * l + l / 2 + 10, self.y * l + l / 2 + 10, fill="yellow")
