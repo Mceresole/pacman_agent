@@ -2,4 +2,4 @@
 
 import App
 
-App.initialize()
+App.App.initialize()

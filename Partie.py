@@ -1,5 +1,5 @@
-from App import *
-from Enumerations import Status
+import App
+import Enumerations
 import labyrinthe.Case
 import personnages.PacMan, personnages.Fantome
 
@@ -180,39 +180,39 @@ class Partie(object):
         Partie.ticks = 1
         Partie.pacman = personnages.PacMan.PacMan()
         Partie.fantomes = [personnages.Fantome() for f in range(1)]
-        App.window.bind("<Up>", Partie.pacman.goUp)
-        App.window.bind("<Down>", Partie.pacman.goDown)
-        App.window.bind("<Right>", Partie.pacman.goRight)
-        App.window.bind("<Left>", Partie.pacman.goLeft)
+        App.App.window.bind("<Up>", Partie.pacman.goUp)
+        App.App.window.bind("<Down>", Partie.pacman.goDown)
+        App.App.window.bind("<Right>", Partie.pacman.goRight)
+        App.App.window.bind("<Left>", Partie.pacman.goLeft)
 
     @staticmethod
     def clear():
         for x in Partie.cases:
             for y in x:
                 if y.gomme:
-                    App.background.delete(y.sprite)
-        App.background.delete(Partie.pacman.sprite)
-        [App.background.delete(f.sprite) for f in Partie.fantomes]
+                    App.App.background.delete(y.sprite)
+        App.App.background.delete(Partie.pacman.sprite)
+        [App.App.background.delete(f.sprite) for f in Partie.fantomes]
 
     @staticmethod
     def motion():
         for f in Partie.fantomes:
             f.bouger()
         Partie.ticks += 1
-        if App.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
-            App.labelPartie.set(App.statusPartie.get())
+        if App.App.statusPartie.get() in [Enumerations.Status.pause.value, Enumerations.Status.perdu.value, Enumerations.Status.gagne.value]:
+            App.App.labelPartie.set(App.App.statusPartie.get())
             return False
-        App.window.after(int(1000 / App.FPS.get()), Partie.motion)
+        App.App.window.after(int(1000 / App.App.FPS.get()), Partie.motion)
 
     @staticmethod
     def start():
-        if App.statusPartie.get() == Status.pause.value:
-            App.statusPartie.set(Status.enCours.value)
+        if App.App.statusPartie.get() == Enumerations.Status.pause.value:
+            App.App.statusPartie.set(Enumerations.Status.enCours.value)
             Partie.motion()
-        elif App.statusPartie.get() == Status.enCours.value:
-            App.statusPartie.set(Status.pause.value)
+        elif App.App.statusPartie.get() == Enumerations.Status.enCours.value:
+            App.App.statusPartie.set(Enumerations.Status.pause.value)
         else:
-            App.statusPartie.set(Status.pause.value)
+            App.App.statusPartie.set(Enumerations.Status.pause.value)
             Partie.clear()
             Partie.initialize()
-        App.labelPartie.set(App.statusPartie.get())
+        App.App.labelPartie.set(App.App.statusPartie.get())

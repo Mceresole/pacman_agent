@@ -1,7 +1,7 @@
 import tkinter
 import Constants
-from Enumerations import Status
-from Partie import Partie
+import Enumerations
+import Partie
 
 
 """
@@ -19,17 +19,17 @@ class App(object):
     scaleVitesse = tkinter.Scale(controls, orient=tkinter.HORIZONTAL, from_=1, to=60, length=180, variable=FPS, cursor='sb_h_double_arrow')  # Curseur pour modifier les FPS
 
     @staticmethod
-    def initialize():
+    def initialize() -> None:
         App.FPS.set(1)
         App.window.title("Pac Man")
         App.window.geometry(str(Constants.t) + "x" + str(Constants.h))
         App.window.resizable(width=False, height=False)
         App.background.pack()
-        App.controls.resizable(width = False, height = False)
+        App.controls.resizable(width=False, height=False)
         App.controls.title("Contrôles")
         App.controls.geometry("200x350")
-        App.statusPartie.set(Status.pause.value)
-        Partie.initialize()
+        App.statusPartie.set(Enumerations.Status.pause.value)
+        Partie.Partie.initialize()
         App.labelPartie.pack()
         App.buttonPartie.pack()
         App.labelVitesse.pack()
