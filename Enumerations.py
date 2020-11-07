@@ -5,9 +5,9 @@ from enum import Enum
 """
 class Action(Enum):
     monter = 0
-    descendre = 1
-    droite = 2
-    gauche = 3
+    descendre = 3
+    droite = 1
+    gauche = 2
 
 """
 Énumération des objectifs de l'agent
