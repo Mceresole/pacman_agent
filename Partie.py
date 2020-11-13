@@ -1,4 +1,5 @@
 from PIL import ImageTk, Image
+from Constants import l, h
 from Enumerations import Status, Objectif
 from labyrinthe.Case import Case
 from labyrinthe.Gomme import Gomme
@@ -8,11 +9,10 @@ from personnages.PacMan import PacMan
 
 class Partie:
 
-    def __init__(self, window, background, statusPartie, controls):
+    def __init__(self, window, background, statusPartie):
         self.window = window
         self.background = background
         self.statusPartie = statusPartie
-        self.controls = controls
         self.cases = []
         self.pacman = None
         self.fantomes = []
@@ -215,7 +215,10 @@ class Partie:
         if self.pacman.ticks != 0:
             self.pacman.ticks -= 1
         if self.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
-            print(self.statusPartie.get())
+            if self.statusPartie.get() == Status.gagne.value:
+                self.background.create_image(0, 0, image=self.victoryImg, anchor="nw")
+            elif self.statusPartie.get() == Status.perdu.value:
+                self.background.create_image(0, 0, image=self.defeatImg, anchor="nw")
             return False
         self.window.after(500, self.motion)
 

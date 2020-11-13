@@ -9,9 +9,8 @@ class App:
     def __init__(self):
         self.window = tkinter.Tk()
         self.background = tkinter.Canvas(self.window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
-        self.controls = tkinter.Toplevel()
         self.statusPartie = tkinter.StringVar()
-        self.partie = Partie(self.window, self.background, self.statusPartie, self.controls)
+        self.partie = Partie(self.window, self.background, self.statusPartie)
         self.window.bind("<Button-1>", self.partie.start)
         self.window.title("Pac Man")
         self.window.geometry(str(t) + "x" + str(h))
