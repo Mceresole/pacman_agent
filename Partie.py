@@ -7,12 +7,10 @@ from personnages.PacMan import PacMan
 
 class Partie:
 
-    def __init__(self, window, background, statusPartie, labelPartie, buttonPartie, controls):
+    def __init__(self, window, background, statusPartie, controls):
         self.window = window
         self.background = background
         self.statusPartie = statusPartie
-        self.labelPartie = labelPartie
-        self.buttonPartie = buttonPartie
         self.controls = controls
         self.cases = []
         self.pacman = None
@@ -212,7 +210,7 @@ class Partie:
         if self.pacman.ticks != 0:
             self.pacman.ticks -= 1
         if self.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
-            self.labelPartie.set(self.statusPartie.get())
+            print(self.statusPartie.get())
             return False
         self.window.after(500, self.motion)
 
@@ -226,4 +224,4 @@ class Partie:
             self.statusPartie.set(Status.pause.value)
             self.clear()
             self.initialize()
-        self.labelPartie.set(self.statusPartie.get())
+        print(self.statusPartie.get())
