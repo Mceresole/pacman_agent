@@ -1,3 +1,4 @@
+from PIL import ImageTk, Image
 from Enumerations import Status, Objectif
 from labyrinthe.Case import Case
 from labyrinthe.Gomme import Gomme
@@ -16,6 +17,10 @@ class Partie:
         self.pacman = None
         self.fantomes = []
         self.ticks = 1
+        self.victoryImg = Image.open("images/Victory.jpg")
+        self.victoryImg = ImageTk.PhotoImage(self.victoryImg)
+        self.defeatImg = Image.open("images/GameOver.jpg")
+        self.defeatImg = ImageTk.PhotoImage(self.defeatImg)
         # Labyrinthe
         self.cases = []
         for x in range(0, 18):
