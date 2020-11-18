@@ -35,7 +35,6 @@ class Fantome:
         print(self.x, self.y, self.objectif.name, self.action.name, self.pacman.ticks)
         self.deplacer(self.action) # effectue le déplacement
         self.tuer() # essaye de tuer pacman
-        self.mourrir() # s'il doit mourrir meurt
 
     # objectif: sortir de l'enclos
     def sortir(self):
@@ -178,14 +177,8 @@ class Fantome:
         self.background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))
 
     def mourrir(self):
+        print(self.objectif, Objectif.fuir, self.pacman.x, self.pacman.y, self.x, self.y)
         if self.objectif == Objectif.fuir:
             if self.pacman.x == self.x and self.pacman.y == self.y:
-                self.x = 9
-                self.y = 4
-                self.action = Action.monter
-                self.objectif = Objectif.sortir
-                fantomeImg = Image.open("images/fantome.jpg").resize((int(l / 2), int(l / 2)), resample=0)
-                fantomeImg = ImageTk.PhotoImage(fantomeImg)
-                self.image = fantomeImg
-                self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
-                self.background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))
+                self.background.delete(self.sprite)
+                self = self.__init__(self.background, self.pacman, self.cases)

@@ -22,38 +22,38 @@ class PacMan:
         self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
         self.nb_gomme = 99
         self.ticks = 0
-        self.hasMoved = False
+        self.hasMoved = 0
 
     def monter(self, event):
-        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == True:
+        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == 2:
             return False
         if not self.cases[self.x][self.y].haut:
             self.y -= 1
-            self.hasMoved = True
+            self.hasMoved += 1
         self.deplacer()
 
     def descendre(self, event):
-        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == True:
+        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == 2:
             return False
         if not self.cases[self.x][self.y].bas:
             self.y += 1
-            self.hasMoved = True
+            self.hasMoved += 1
         self.deplacer()
 
     def droite(self, event):
-        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == True:
+        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == 2:
             return False
         if not self.cases[self.x][self.y].droite:
             self.x += 1
-            self.hasMoved = True
+            self.hasMoved += 1
         self.deplacer()
 
     def gauche(self, event):
-        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == True:
+        if self.statusPartie.get() != Status.enCours.value or self.hasMoved == 2:
             return False
         if not self.cases[self.x][self.y].gauche:
             self.x -= 1
-            self.hasMoved = True
+            self.hasMoved += 1
         self.deplacer()
 
     def deplacer(self):

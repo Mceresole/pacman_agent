@@ -217,6 +217,7 @@ class Partie:
                 f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
+                f.mourrir()
                 fantomeImg = Image.open("images/fantome.jpg").resize((int(l / 2), int(l / 2)), resample=0)
                 fantomeImg = ImageTk.PhotoImage(fantomeImg)
                 f.image = fantomeImg
@@ -244,5 +245,4 @@ class Partie:
         else:
             self.statusPartie.set(Status.pause.value)
             self.clear()
-            self.initialize()
         print(self.statusPartie.get())
