@@ -20,7 +20,6 @@ class Fantome:
         fantomeImg = ImageTk.PhotoImage(fantomeImg)
         self.image = fantomeImg
         self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
-        self.alive = True
 
     def bouger(self):
         if self.objectif == Objectif.chercher:
@@ -175,9 +174,6 @@ class Fantome:
         else:
             self.x -= 1
         self.background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))
-        if self.pacman.x == self.x and self.pacman.y == self.y and Objectif.fuir:
-            self.background.delete(self.sprite)
-            self.alive = False
 
     def mourrir(self):
         if self.objectif == Objectif.fuir:
@@ -186,3 +182,4 @@ class Fantome:
                 self.y = 4
                 self.action = Action.monter
                 self.objectif = Objectif.sortir
+                self.background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))
