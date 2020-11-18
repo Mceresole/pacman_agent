@@ -7,6 +7,11 @@ from personnages.Fantome import Fantome
 from personnages.PacMan import PacMan
 
 
+"""
+Création d'une partie. Une partie est une instance recréable si PacMan meurt ou gagne.
+Elle instancie Pacman, les Fantomes, les cases avec leurs attributs (gomme) ainsi que la "loop" de la
+partie pour que cela fonctionne.
+"""
 class Partie:
 
     def __init__(self, window, background, statusPartie):

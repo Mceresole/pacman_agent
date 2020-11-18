@@ -5,7 +5,9 @@ from Enumerations import Action, Objectif
 
 
 """
-La classe fantôme représente un agent avec des coordonnées.
+La classe fantôme représente un agent avec des coordonnées. Le fantome peut tuer PacMan, revivre si PacMan le tue.
+C'est un agent qui obéit à des objectifs et agit (actions) en fonction. Il y a un comportement qui fait que
+le fantome suit PacMan s'il le voit à travers les murs. Il fait le comportement inverse s'il doit le "fuir".
 """
 class Fantome:
     def __init__(self, background, pacman, cases):
