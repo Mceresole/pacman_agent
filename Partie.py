@@ -1,17 +1,19 @@
 from PIL import ImageTk, Image
-from Constants import l, h, e
+
+from Constants import l, e
 from Enumerations import Status, Objectif
 from labyrinthe.Case import Case
 from labyrinthe.Gomme import Gomme
 from personnages.Fantome import Fantome
 from personnages.PacMan import PacMan
 
-
 """
 Création d'une partie. Une partie est une instance recréable si PacMan meurt ou gagne.
 Elle instancie Pacman, les Fantomes, les cases avec leurs attributs (gomme) ainsi que la "loop" de la
 partie pour que cela fonctionne.
 """
+
+
 class Partie:
 
     def __init__(self, window, background, statusPartie):
@@ -31,7 +33,7 @@ class Partie:
         self.cases = []
         for x in range(0, 18):
             self.cases.append([])
-        ##ligne 1
+        # ligne 1
         self.cases[0].append(Case(0, 0, True, False, False, True, Gomme.vide, background))
         for x in range(1, 3):
             self.cases[x].append(Case(x, 0, True, True, False, False, Gomme.gomme, background))
@@ -46,7 +48,7 @@ class Partie:
         for x in range(15, 17):
             self.cases[x].append(Case(x, 0, True, True, False, False, Gomme.gomme, background))
         self.cases[17].append(Case(17, 0, True, False, True, False, Gomme.gomme, background))
-        ##ligne 2
+        # ligne 2
         self.cases[0].append(Case(0, 1, False, False, True, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 1, True, False, False, True, Gomme.vide, background))
         self.cases[2].append(Case(2, 1, True, True, True, False, Gomme.vide, background))
@@ -64,7 +66,7 @@ class Partie:
         self.cases[16].append(Case(16, 1, True, False, True, False, Gomme.vide, background))
         self.cases[17].append(Case(17, 1, False, False, True, True, Gomme.gomme, background))
 
-        ##ligne 3
+        # ligne 3
         self.cases[0].append(Case(0, 2, False, False, True, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 2, False, False, True, True, Gomme.vide, background))
         self.cases[2].append(Case(2, 2, True, False, False, True, Gomme.gomme, background))
@@ -83,7 +85,7 @@ class Partie:
         self.cases[15].append(Case(15, 2, True, False, True, False, Gomme.gomme, background))
         self.cases[16].append(Case(16, 2, False, False, True, True, Gomme.vide, background))
         self.cases[17].append(Case(17, 2, False, False, True, True, Gomme.gomme, background))
-        ##ligne4
+        # ligne4
         self.cases[0].append(Case(0, 3, False, False, True, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 3, False, True, True, True, Gomme.vide, background))
         self.cases[2].append(Case(2, 3, False, False, True, True, Gomme.gomme, background))
@@ -102,7 +104,7 @@ class Partie:
         self.cases[15].append(Case(15, 3, False, False, True, True, Gomme.gomme, background))
         self.cases[16].append(Case(16, 3, False, True, True, True, Gomme.vide, background))
         self.cases[17].append(Case(17, 3, False, False, True, True, Gomme.gomme, background))
-        ##ligne5
+        # ligne5
         self.cases[0].append(Case(0, 4, False, False, False, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 4, True, True, False, False, Gomme.gomme, background))
         self.cases[2].append(Case(2, 4, False, False, False, False, Gomme.gomme, background))
@@ -121,7 +123,7 @@ class Partie:
         self.cases[15].append(Case(15, 4, False, False, False, False, Gomme.gomme, background))
         self.cases[16].append(Case(16, 4, True, True, False, False, Gomme.gomme, background))
         self.cases[17].append(Case(17, 4, False, False, True, False, Gomme.gomme, background))
-        ##ligne6
+        # ligne6
         self.cases[0].append(Case(0, 5, False, False, True, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 5, True, False, True, True, Gomme.vide, background))
         self.cases[2].append(Case(2, 5, False, False, True, True, Gomme.gomme, background))
@@ -138,7 +140,7 @@ class Partie:
         self.cases[15].append(Case(15, 5, False, False, True, True, Gomme.gomme, background))
         self.cases[16].append(Case(16, 5, True, False, True, True, Gomme.vide, background))
         self.cases[17].append(Case(17, 5, False, False, True, True, Gomme.gomme, background))
-        ##ligne 7
+        # ligne 7
         self.cases[0].append(Case(0, 6, False, False, True, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 6, False, False, True, True, Gomme.vide, background))
         self.cases[2].append(Case(2, 6, False, True, False, True, Gomme.gomme, background))
@@ -157,7 +159,7 @@ class Partie:
         self.cases[15].append(Case(15, 6, False, True, True, False, Gomme.gomme, background))
         self.cases[16].append(Case(16, 6, False, False, True, True, Gomme.vide, background))
         self.cases[17].append(Case(17, 6, False, False, True, True, Gomme.gomme, background))
-        ##ligne 8
+        # ligne 8
         self.cases[0].append(Case(0, 7, False, False, True, True, Gomme.gomme, background))
         self.cases[1].append(Case(1, 7, False, True, False, True, Gomme.vide, background))
         self.cases[2].append(Case(2, 7, True, True, True, False, Gomme.vide, background))
@@ -174,7 +176,7 @@ class Partie:
         self.cases[15].append(Case(15, 7, True, True, False, True, Gomme.vide, background))
         self.cases[16].append(Case(16, 7, False, True, True, False, Gomme.vide, background))
         self.cases[17].append(Case(17, 7, False, False, True, True, Gomme.gomme, background))
-        ##ligne 9
+        # ligne 9
         self.cases[0].append(Case(0, 8, False, True, False, True, Gomme.gomme, background))
         for x in range(1, 3):
             self.cases[x].append(Case(x, 8, True, True, False, False, Gomme.gomme, background))
