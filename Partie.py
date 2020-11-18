@@ -219,7 +219,6 @@ class Partie:
                     f.mourir()
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
-                f.mourrir()
                 fantomeImg = Image.open("images/fantome.jpg").resize((int(l / 2), int(l / 2)), resample=0)
                 fantomeImg = ImageTk.PhotoImage(fantomeImg)
                 f.image = fantomeImg
