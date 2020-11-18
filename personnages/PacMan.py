@@ -5,7 +5,8 @@ from labyrinthe.Gomme import Gomme
 
 
 """
-La classe pacman ......
+La classe PacMan. Elle permet de déplacer le héros, manger les gommes, les fantomes si il a mangé
+une super gomme...
 """
 class PacMan:
     def __init__(self, background, statusPartie, cases):
