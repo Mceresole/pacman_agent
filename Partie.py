@@ -215,6 +215,8 @@ class Partie:
                 fantomeImg = ImageTk.PhotoImage(fantomeImg)
                 f.image = fantomeImg
                 f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
+                if self.pacman.x == f.x and self.pacman.y == f.y:
+                    f.mourir()
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
                 f.mourrir()
