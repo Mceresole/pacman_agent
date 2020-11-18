@@ -182,4 +182,8 @@ class Fantome:
                 self.y = 4
                 self.action = Action.monter
                 self.objectif = Objectif.sortir
+                fantomeImg = Image.open("images/fantome.jpg").resize((int(l / 2), int(l / 2)), resample=0)
+                fantomeImg = ImageTk.PhotoImage(fantomeImg)
+                self.image = fantomeImg
+                self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
                 self.background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))

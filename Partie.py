@@ -1,5 +1,5 @@
 from PIL import ImageTk, Image
-from Constants import l, h
+from Constants import l, h, e
 from Enumerations import Status, Objectif
 from labyrinthe.Case import Case
 from labyrinthe.Gomme import Gomme
@@ -206,8 +206,16 @@ class Partie:
         for f in self.fantomes:
             if self.pacman.ticks != 0:
                 f.objectif = Objectif.fuir
+                fantomeImg = Image.open("images/voilabis.jpg").resize((int(l / 2), int(l / 2)), resample=0)
+                fantomeImg = ImageTk.PhotoImage(fantomeImg)
+                f.image = fantomeImg
+                f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
+                fantomeImg = Image.open("images/fantome.jpg").resize((int(l / 2), int(l / 2)), resample=0)
+                fantomeImg = ImageTk.PhotoImage(fantomeImg)
+                f.image = fantomeImg
+                f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
             f.bouger()
 
         self.ticks += 1
