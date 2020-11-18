@@ -200,6 +200,7 @@ class Partie:
         self.background.delete(self.pacman.sprite)
         [self.background.delete(f.sprite) for f in self.fantomes]
         self.background.delete(self.endscreen)
+        self = self.__init__(self.window, self.background, self.statusPartie)
 
     def motion(self):
         for f in self.fantomes:
