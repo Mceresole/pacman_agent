@@ -216,6 +216,7 @@ class Partie:
                 f.image = fantomeImg
                 f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
                 if self.pacman.x == f.x and self.pacman.y == f.y:
+                    self.pacman.ticks = 0
                     f.mourir()
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
