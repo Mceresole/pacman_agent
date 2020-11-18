@@ -1,3 +1,5 @@
+from typing import List
+
 from PIL import ImageTk, Image
 
 from Constants import l, e
@@ -12,8 +14,6 @@ Création d'une partie. Une partie est une instance recréable si PacMan meurt o
 Elle instancie Pacman, les Fantomes, les cases avec leurs attributs (gomme) ainsi que la "loop" de la
 partie pour que cela fonctionne.
 """
-
-
 class Partie:
 
     def __init__(self, window, background, statusPartie):
