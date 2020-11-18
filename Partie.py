@@ -211,6 +211,7 @@ class Partie:
             f.bouger()
 
         self.ticks += 1
+        self.pacman.hasMoved = False
         if self.pacman.ticks != 0:
             self.pacman.ticks -= 1
         if self.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
