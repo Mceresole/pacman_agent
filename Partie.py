@@ -21,6 +21,7 @@ class Partie:
         self.victoryImg = ImageTk.PhotoImage(self.victoryImg)
         self.defeatImg = Image.open("images/GameOver.jpg")
         self.defeatImg = ImageTk.PhotoImage(self.defeatImg)
+        self.endscreen = None
         # Labyrinthe
         self.cases = []
         for x in range(0, 18):
@@ -198,6 +199,7 @@ class Partie:
                     self.background.delete(y.sprite)
         self.background.delete(self.pacman.sprite)
         [self.background.delete(f.sprite) for f in self.fantomes]
+        self.background.delete(self.endscreen)
 
     def motion(self):
         for f in self.fantomes:
@@ -216,9 +218,9 @@ class Partie:
             self.pacman.ticks -= 1
         if self.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
             if self.statusPartie.get() == Status.gagne.value:
-                self.background.create_image(0, 0, image=self.victoryImg, anchor="nw")
+                self.endscreen = self.background.create_image(0, 0, image=self.victoryImg, anchor="nw")
             elif self.statusPartie.get() == Status.perdu.value:
-                self.background.create_image(0, 0, image=self.defeatImg, anchor="nw")
+                self.endscreen = self.background.create_image(0, 0, image=self.defeatImg, anchor="nw")
             return False
         self.window.after(500, self.motion)
 
