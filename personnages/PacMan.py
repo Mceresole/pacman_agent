@@ -23,21 +23,29 @@ class PacMan:
         self.ticks = 0
 
     def monter(self, event):
+        if self.statusPartie.get() != Status.enCours.value:
+            return False
         if not self.cases[self.x][self.y].haut:
             self.y -= 1
         self.deplacer()
 
     def descendre(self, event):
+        if self.statusPartie.get() != Status.enCours.value:
+            return False
         if not self.cases[self.x][self.y].bas:
             self.y += 1
         self.deplacer()
 
     def droite(self, event):
+        if self.statusPartie.get() != Status.enCours.value:
+            return False
         if not self.cases[self.x][self.y].droite:
             self.x += 1
         self.deplacer()
 
     def gauche(self, event):
+        if self.statusPartie.get() != Status.enCours.value:
+            return False
         if not self.cases[self.x][self.y].gauche:
             self.x -= 1
         self.deplacer()
