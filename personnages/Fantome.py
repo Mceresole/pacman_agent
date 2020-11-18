@@ -34,6 +34,7 @@ class Fantome:
         print(self.x, self.y, self.objectif.name, self.action.name, self.pacman.ticks)
         self.deplacer(self.action) # effectue le déplacement
         self.tuer() # essaye de tuer pacman
+        self.mourrir() # s'il doit mourrir meurt
 
     # objectif: sortir de l'enclos
     def sortir(self):
@@ -159,8 +160,9 @@ class Fantome:
 
     # objectif: tuer pacman
     def tuer(self):
-        if self.pacman.x == self.x and self.pacman.y == self.y:
-            self.pacman.mourrir()
+        if self.objectif == Objectif.chercher:
+            if self.pacman.x == self.x and self.pacman.y == self.y:
+                self.pacman.mourrir()
 
     # action: monter, descendre, droite, gauche
     def deplacer(self, argument):
@@ -176,3 +178,11 @@ class Fantome:
         if self.pacman.x == self.x and self.pacman.y == self.y and Objectif.fuir:
             self.background.delete(self.sprite)
             self.alive = False
+
+    def mourrir(self):
+        if self.objectif == Objectif.fuir:
+            if self.pacman.x == self.x and self.pacman.y == self.y:
+                self.x = 9
+                self.y = 4
+                self.action = Action.monter
+                self.objectif = Objectif.sortir
