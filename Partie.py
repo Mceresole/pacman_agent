@@ -208,10 +208,6 @@ class Partie:
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
             f.bouger()
-            if not f.alive:
-                self.fantomes.remove(f)
-                newF = Fantome(self.background, self.pacman, self.cases)
-                self.fantomes.append(newF)
 
         self.ticks += 1
         if self.pacman.ticks != 0:
