@@ -200,13 +200,7 @@ class Partie:
         self.window.bind("<Left>", self.pacman.gauche)
 
     def clear(self):
-        for x in self.cases:
-            for y in x:
-                if y.gomme in [Gomme.gomme, Gomme.superGomme]:
-                    self.background.delete(y.sprite)
-        self.background.delete(self.pacman.sprite)
-        [self.background.delete(f.sprite) for f in self.fantomes]
-        self.background.delete(self.endscreen)
+        self.background.delete("all")
         self = self.__init__(self.window, self.background, self.statusPartie)
 
     def motion(self):

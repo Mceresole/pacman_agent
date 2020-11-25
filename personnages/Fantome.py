@@ -10,10 +10,11 @@ C'est un agent qui obéit à des objectifs et agit (actions) en fonction. Il y a
 le fantome suit PacMan s'il le voit à travers les murs. Il fait le comportement inverse s'il doit le "fuir".
 """
 class Fantome:
-    def __init__(self, background, pacman, cases):
+    def __init__(self, background, pacman, cases, fantomes):
         self.background = background
         self.pacman = pacman
         self.cases = cases
+        self.fantomes = fantomes
         self.x = 9
         self.y = 4
         self.action = Action.monter
@@ -55,7 +56,29 @@ class Fantome:
                         test = True # => oui
                     i += 1
                 if not test:
-                    return Action.descendre # => non donc on descend
+                    i = 0
+                    while i < len(self.fantomes) and test == False:
+                        if self.fantomes[i].x == self.x and self.fantomes[i].y < self.y:
+                            test = True # => oui
+                        i += 1
+                    if not test:
+                        return Action.descendre # => non donc on descend
+                    r = random.randint(0, 1)
+                    if r == 0 and self.action == Action.gauche:
+                        r = 1
+                    if r == 1 and self.action == Action.droite:
+                        r = 0
+                    if r == 0 and self.cases[self.x][self.y].droite != True:
+                        return Action.droite
+                    if r == 0 and self.cases[self.x][self.y].droite == True:
+                        if self.cases[self.x][self.y].gauche == True:
+                            return Action.descendre
+                        return Action.gauche
+                    if self.cases[self.x][self.y].gauche != True:
+                        return Action.gauche
+                    if self.cases[self.x][self.y].droite == True:
+                       return Action.descendre
+                    return Action.droite
             else: # sinon fantome plus bas
                 i = self.pacman.y
                 while i < self.y and test == False:
@@ -63,7 +86,29 @@ class Fantome:
                         test = True
                     i += 1
                 if not test:
-                    return Action.monter # => donc on monte
+                    i = 0
+                    while i < len(self.fantomes) and test == False:
+                        if self.fantomes[i].x == self.x and self.fantomes[i].y > self.y:
+                            test = True # => oui
+                        i += 1
+                    if not test:
+                        return Action.monter # => non donc on monte
+                    r = random.randint(0, 1)
+                    if r == 0 and self.action == Action.gauche:
+                        r = 1
+                    if r == 1 and self.action == Action.droite:
+                        r = 0
+                    if r == 0 and self.cases[self.x][self.y].droite != True:
+                        return Action.droite
+                    if r == 0 and self.cases[self.x][self.y].droite == True:
+                        if self.cases[self.x][self.y].gauche == True:
+                            return Action.monter
+                        return Action.gauche
+                    if self.cases[self.x][self.y].gauche != True:
+                        return Action.gauche
+                    if self.cases[self.x][self.y].droite == True:
+                       return Action.monter
+                    return Action.droite
         if self.pacman.y == self.y:
             if self.pacman.x > self.x:
                 i = self.x
@@ -72,7 +117,29 @@ class Fantome:
                         test = True
                     i += 1
                 if not test:
-                    return Action.droite # => on va a droite
+                    i = 0
+                    while i < len(self.fantomes) and test == False:
+                        if self.fantomes[i].y == self.y and self.fantomes[i].x < self.x:
+                            test = True # => oui
+                        i += 1
+                    if not test:
+                        return Action.droite # => non donc on va a droite
+                    r = random.randint(0, 1)
+                    if r == 0 and self.action == Action.monter:
+                        r = 1
+                    if r == 1 and self.action == Action.descendre:
+                        r = 0
+                    if r == 0 and self.cases[self.x][self.y].descendre != True:
+                        return Action.descendre
+                    if r == 0 and self.cases[self.x][self.y].descendre == True:
+                        if self.cases[self.x][self.y].monter == True:
+                            return Action.droite
+                        return Action.monter
+                    if self.cases[self.x][self.y].monter != True:
+                        return Action.monter
+                    if self.cases[self.x][self.y].descendre == True:
+                       return Action.droite
+                    return Action.descendre
             else:
                 i = self.pacman.x
                 while i < self.x and test == False:
@@ -80,7 +147,29 @@ class Fantome:
                         test = True
                     i += 1
                 if not test:
-                    return Action.gauche # => on va a droite
+                    i = 0
+                    while i < len(self.fantomes) and test == False:
+                        if self.fantomes[i].y == self.y and self.fantomes[i].x < self.x:
+                            test = True # => oui
+                        i += 1
+                    if not test:
+                        return Action.gauche # => non donc on va a gauche
+                    r = random.randint(0, 1)
+                    if r == 0 and self.action == Action.monter:
+                        r = 1
+                    if r == 1 and self.action == Action.descendre:
+                        r = 0
+                    if r == 0 and self.cases[self.x][self.y].descendre != True:
+                        return Action.descendre
+                    if r == 0 and self.cases[self.x][self.y].descendre == True:
+                        if self.cases[self.x][self.y].monter == True:
+                            return Action.gauche
+                        return Action.monter
+                    if self.cases[self.x][self.y].monter != True:
+                        return Action.monter
+                    if self.cases[self.x][self.y].descendre == True:
+                       return Action.gauche
+                    return Action.descendre
         """
         déplacement aléatoire:
             - si action mémorisé et déplacement possible => la meme action
