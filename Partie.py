@@ -6,16 +6,16 @@ from Constants import l, e
 from Enumerations import Status, Objectif
 from labyrinthe.Case import Case
 from labyrinthe.Gomme import Gomme
-from personnages.Fantome import Fantome
+from personnages.Fantome import *
 from personnages.PacMan import PacMan
 
-"""
-Création d'une partie. Une partie est une instance recréable si PacMan meurt ou gagne.
-Elle instancie Pacman, les Fantomes, les cases avec leurs attributs (gomme) ainsi que la "loop" de la
-partie pour que cela fonctionne.
-"""
-class Partie:
 
+class Partie:
+    """
+    Création d'une partie. Une partie est une instance recréable si PacMan meurt ou gagne.
+    Elle instancie Pacman, les Fantomes, les cases avec leurs attributs (gomme) ainsi que la "loop" de la
+    partie pour que cela fonctionne.
+    """
     def __init__(self, window, background, statusPartie):
         self.window = window
         self.background = background
@@ -193,7 +193,8 @@ class Partie:
         self.cases[17].append(Case(17, 8, False, True, True, False, Gomme.superGomme, background))
         self.ticks = 1
         self.pacman = PacMan(self.background, self.statusPartie, self.cases)
-        self.fantomes = [Fantome(self.background, self.pacman, self.cases) for f in range(1)]
+        self.fblackboard = FBlackboard()
+        self.fantomes = [Fantome(self.background, self.pacman, self.cases, self.fblackboard) for f in range(4)]
         self.window.bind("<Up>", self.pacman.monter)
         self.window.bind("<Down>", self.pacman.descendre)
         self.window.bind("<Right>", self.pacman.droite)
@@ -221,6 +222,7 @@ class Partie:
                 f.image = fantomeImg
                 f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
             f.bouger()
+
 
         self.ticks += 1
         self.pacman.hasMoved = False

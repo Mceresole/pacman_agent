@@ -4,12 +4,11 @@ from Enumerations import Status
 from Partie import Partie
 
 
-"""
-Classe App représentant l'application. Création des fenêtres et autres variables qui ne seront instanciées
-qu'au démarrage de l'application.
-"""
 class App:
-
+    """
+    Classe App représentant l'application. Création des fenêtres et autres variables qui ne seront instanciées
+    qu'au démarrage de l'application.
+    """
     def __init__(self):
         self.window = tkinter.Tk()
         self.background = tkinter.Canvas(self.window, width=t, height=t, background="#000", bd=0, highlightthickness=0)
