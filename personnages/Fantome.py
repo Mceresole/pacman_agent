@@ -8,6 +8,7 @@ class FBlackboard:
     """
     Tableau noir / registre d'informations partagé entre les fantômes.
     """
+
     def __init__(self):
         self.data = {}
         self.name = 0  # plus tard, des prénoms pour humaniser
@@ -57,6 +58,35 @@ class Fantome:
         self.image = fantomeImg
         self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
 
+    def etat(self, test = False):
+        """
+        Retourne l'état de l'agent (son objectif, son action, son savoir)
+        :param test: est-ce qu'il existe un autre fantôme entre soi et pac man ?
+        :return:
+        """
+        a1 = ""
+        o1 = ""
+        if self.action == Action.gauche:
+            a1 = "aller à gauche"
+        elif self.action == Action.droite:
+            a1 = "aller à droite"
+        elif self.action == Action.monter:
+            a1 = "monter"
+        else:
+            a1 = "descendre"
+        if self.objectif == Objectif.chercher:
+            o1 = "chercher"
+        elif self.objectif == Objectif.sortir:
+            o1 = "sortir"
+        elif self.objectif == Objectif.fuir:
+            o1 = "fuir"
+        else:
+            o1 = "manger"
+        if test == False:
+            return str(self.name) + " va " + a1 + " pour " + o1 + " sachant que Pac Man n'est pas suivi par un fantôme plus proche."
+        else:
+            return str(self.name) + " va " + a1 + " pour " + o1 + " sachant que Pac Man est suivi par un fantôme plus proche."
+
     def bouger(self):
         self.blackboard.ecrire_blackboard(self.name, self.action, self.objectif, self.x, self.y)
         if self.objectif == Objectif.chercher:
@@ -67,7 +97,6 @@ class Fantome:
             self.action = self.fuir()
         else:
             self.action = self.chercher()
-        print(self.x, self.y, self.objectif.name, self.action.name, self.pacman.ticks)
         self.deplacer(self.action)  # effectue le déplacement
         self.tuer()  # essaye de tuer pacman
 
@@ -96,6 +125,7 @@ class Fantome:
                         if fantomes[i]["x"] == self.x and fantomes[i]["y"] < self.y:
                             test = True  # => oui
                         i += 1
+                    print(self.etat(test))
                     if not test:
                         return Action.descendre  # => non donc on descend
                     r = random.randint(0, 1)
@@ -126,6 +156,7 @@ class Fantome:
                         if fantomes[i]["x"] == self.x and fantomes[i]["y"] > self.y:
                             test = True  # => oui
                         i += 1
+                    print(self.etat(test))
                     if not test:
                         return Action.monter  # => non donc on monte
                     r = random.randint(0, 1)
@@ -157,6 +188,7 @@ class Fantome:
                         if fantomes[i]["y"] == self.y and fantomes[i]["x"] < self.x:
                             test = True  # => oui
                         i += 1
+                    print(self.etat(test))
                     if not test:
                         return Action.droite  # => non donc on va a droite
                     r = random.randint(0, 1)
@@ -187,6 +219,7 @@ class Fantome:
                         if fantomes[i]["y"] == self.y and fantomes[i]["x"] < self.x:
                             test = True  # => oui
                         i += 1
+                    print(self.etat(test))
                     if not test:
                         return Action.gauche  # => non donc on va a gauche
                     r = random.randint(0, 1)
@@ -301,7 +334,6 @@ class Fantome:
         self.background.coords(self.sprite, self.x * l + (3 * e), self.y * l + (3 * e))
 
     def mourir(self):
-        print(self.objectif, Objectif.fuir, self.pacman.x, self.pacman.y, self.x, self.y)
         self.x = 9
         self.y = 4
         self.action = Action.monter
