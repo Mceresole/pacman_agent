@@ -6,4 +6,4 @@ Pour installer, il faut
 3. ```pip install -r /path/to/requirements.txt``` pour installer les dépendances. Vérifier que tkinter est installé avec la distribution python.
 
 # Lancer
-```python main.py
+```python main.py```
