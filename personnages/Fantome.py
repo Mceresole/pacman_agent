@@ -292,7 +292,7 @@ class Fantome:
     def tuer(self):
         if self.objectif == Objectif.chercher:
             if self.pacman.x == self.x and self.pacman.y == self.y:
-                self.pacman.mourrir()
+                self.pacman.mourir()
 
     # action: monter, descendre, droite, gauche
     def deplacer(self, argument):

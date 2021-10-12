@@ -3,7 +3,7 @@ from typing import List
 from PIL import ImageTk, Image
 
 from Constants import l, e
-from Enumerations import Status, Objectif
+from Enumerations import Status, Objectif, ObjectifPac
 from labyrinthe.Case import Case
 from labyrinthe.Gomme import Gomme
 from personnages.Fantome import *
@@ -217,6 +217,7 @@ class Partie:
                     self.pacman.ticks = 0
                     f.mourir()
             elif f.objectif == Objectif.fuir:
+                self.pacman.objectif = ObjectifPac.chercher
                 f.objectif = Objectif.chercher
                 fantomeImg = Image.open(f.img).resize((int(l / 2), int(l / 2)), resample=0)
                 fantomeImg = ImageTk.PhotoImage(fantomeImg)
@@ -229,7 +230,7 @@ class Partie:
         self.pacman.hasMoved = False
         if self.pacman.ticks != 0:
             self.pacman.ticks -= 1
-        if self.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value]:
+        if self.statusPartie.get() in [Status.pause.value, Status.perdu.value, Status.gagne.value, Status.suicide.value]:
             if self.statusPartie.get() == Status.gagne.value:
                 self.endscreen = self.background.create_image(0, 0, image=self.victoryImg, anchor="nw")
             elif self.statusPartie.get() == Status.perdu.value:
