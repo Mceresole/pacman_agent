@@ -42,7 +42,7 @@ class Fantome:
     le fantome suit PacMan s'il le voit à travers les murs. Il fait le comportement inverse s'il doit le "fuir".
     """
 
-    def __init__(self, background, pacman, cases, blackboard: FBlackboard, image):
+    def __init__(self, background, pacman, cases, blackboard: FBlackboard, image, nom):
         self.name = blackboard.name  # associe le nom
         blackboard.name += 1  # incrémente le nom, index nom
         self.background = background
@@ -57,6 +57,7 @@ class Fantome:
         fantomeImg = ImageTk.PhotoImage(fantomeImg)
         self.image = fantomeImg
         self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
+        self.nom = nom
         self.arret = False
 
     def etat(self, test = False):
@@ -84,9 +85,9 @@ class Fantome:
         else:
             o1 = "manger"
         if test == False:
-            return str(self.name) + " va " + a1 + " pour " + o1 + " sachant que Pac Man n'est pas suivi par un fantôme plus proche."
+            return str(self.nom) + " va " + a1 + " pour " + o1 + " sachant que Pac Man n'est pas suivi par un fantôme plus proche."
         else:
-            return str(self.name) + " va " + a1 + " pour " + o1 + " sachant que Pac Man est suivi par un fantôme plus proche."
+            return str(self.nom) + " va " + a1 + " pour " + o1 + " sachant que Pac Man est suivi par un fantôme plus proche."
 
     def bouger(self):
         while(self.arret):

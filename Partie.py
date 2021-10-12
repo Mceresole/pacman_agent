@@ -194,7 +194,7 @@ class Partie:
         self.ticks = 1
         self.pacman = PacMan(self.background, self.statusPartie, self.cases)
         self.fblackboard = FBlackboard()
-        self.fantomes = [Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/fantome.jpg"), Fantome(self.background, self.pacman, self.cases, self.fblackboard,"images/Inky.jpg"), Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/Clydejpg"), Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/Pinkyjpg")]
+        self.fantomes = [Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/fantome.jpg", "blinky"), Fantome(self.background, self.pacman, self.cases, self.fblackboard,"images/Inky.jpg", "inky"), Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/Clydejpg", "clyde"), Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/Pinkyjpg", "pinky")]
         self.window.bind("<Up>", self.pacman.monter)
         self.window.bind("<Down>", self.pacman.descendre)
         self.window.bind("<Right>", self.pacman.droite)
