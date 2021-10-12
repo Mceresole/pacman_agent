@@ -18,6 +18,14 @@ class Objectif(Enum):
     tuer = 2
     sortir = 3
 
+"""
+Énumération des objectifs de pacman
+"""
+class ObjectifPac(Enum):
+    chercher = 0
+    attaquer = 1
+
+
 class Status(Enum):
     pause = "Partie en pause"
     enCours = "Partie en cours"
