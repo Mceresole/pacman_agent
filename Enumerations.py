@@ -31,3 +31,4 @@ class Status(Enum):
     enCours = "Partie en cours"
     perdu = "Perdu !"
     gagne = "Gagné !"
+    suicide = "Suicide..."

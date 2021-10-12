@@ -28,6 +28,8 @@ class Partie:
         self.victoryImg = ImageTk.PhotoImage(self.victoryImg)
         self.defeatImg = Image.open("images/GameOver.jpg")
         self.defeatImg = ImageTk.PhotoImage(self.defeatImg)
+        self.suicideImg = Image.open("images/Suicide.jpg")
+        self.suicideImg = ImageTk.PhotoImage(self.suicideImg)
         self.endscreen = None
         # Labyrinthe
         self.cases = []
@@ -192,19 +194,18 @@ class Partie:
             self.cases[x].append(Case(x, 8, True, True, False, False, Gomme.gomme, background))
         self.cases[17].append(Case(17, 8, False, True, True, False, Gomme.superGomme, background))
         self.ticks = 1
-        self.pacman = PacMan(self.background, self.statusPartie, self.cases)
         self.fblackboard = FBlackboard()
-        self.fantomes = [Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/fantome.jpg", "blinky"), Fantome(self.background, self.pacman, self.cases, self.fblackboard,"images/Inky.jpg", "inky"), Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/Clydejpg", "clyde"), Fantome(self.background, self.pacman, self.cases, self.fblackboard, "images/Pinkyjpg", "pinky")]
-        self.window.bind("<Up>", self.pacman.monter)
-        self.window.bind("<Down>", self.pacman.descendre)
-        self.window.bind("<Right>", self.pacman.droite)
-        self.window.bind("<Left>", self.pacman.gauche)
+        self.fantomes = [Fantome(self.background, self.cases, self.fblackboard, "images/fantome.jpg", "blinky"), Fantome(self.background, self.cases, self.fblackboard,"images/Inky.jpg", "inky"), Fantome(self.background, self.cases, self.fblackboard, "images/Clyde.jpg", "clyde"), Fantome(self.background, self.cases, self.fblackboard, "images/Pinky.jpg", "pinky")]
+        self.pacman = PacMan(self.background, self.statusPartie, self.cases, self.fantomes)
+        for i in range (len(self.fantomes)):
+            self.fantomes[i].pacman = self.pacman
 
     def clear(self):
         self.background.delete("all")
         self = self.__init__(self.window, self.background, self.statusPartie)
 
     def motion(self):
+        self.pacman.bouger()
         for f in self.fantomes:
             if self.pacman.ticks != 0:
                 f.objectif = Objectif.fuir
@@ -217,7 +218,7 @@ class Partie:
                     f.mourir()
             elif f.objectif == Objectif.fuir:
                 f.objectif = Objectif.chercher
-                fantomeImg = Image.open("images/fantome.jpg").resize((int(l / 2), int(l / 2)), resample=0)
+                fantomeImg = Image.open(f.img).resize((int(l / 2), int(l / 2)), resample=0)
                 fantomeImg = ImageTk.PhotoImage(fantomeImg)
                 f.image = fantomeImg
                 f.sprite = f.background.create_image(f.x * l + (3 * e), f.y * l + (3 * e), image=f.image)
@@ -233,6 +234,8 @@ class Partie:
                 self.endscreen = self.background.create_image(0, 0, image=self.victoryImg, anchor="nw")
             elif self.statusPartie.get() == Status.perdu.value:
                 self.endscreen = self.background.create_image(0, 0, image=self.defeatImg, anchor="nw")
+            elif self.statusPartie.get() == Status.suicide.value:
+                self.endscreen = self.background.create_image(0, 0, image=self.suicideImg, anchor="nw")
             return False
         self.window.after(500, self.motion)
 

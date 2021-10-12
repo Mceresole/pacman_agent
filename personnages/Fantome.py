@@ -42,17 +42,18 @@ class Fantome:
     le fantome suit PacMan s'il le voit à travers les murs. Il fait le comportement inverse s'il doit le "fuir".
     """
 
-    def __init__(self, background, pacman, cases, blackboard: FBlackboard, image, nom):
+    def __init__(self, background, cases, blackboard: FBlackboard, image, nom):
         self.name = blackboard.name  # associe le nom
         blackboard.name += 1  # incrémente le nom, index nom
         self.background = background
-        self.pacman = pacman
+        self.pacman = None
         self.cases = cases
         self.blackboard = blackboard
         self.x = 9
         self.y = 4
         self.action = Action.monter
         self.objectif = Objectif.sortir
+        self.img = image
         fantomeImg = Image.open(image).resize((int(l / 2), int(l / 2)), resample=0)
         fantomeImg = ImageTk.PhotoImage(fantomeImg)
         self.image = fantomeImg
@@ -60,38 +61,10 @@ class Fantome:
         self.nom = nom
         self.arret = False
 
-    def etat(self, test = False):
-        """
-        Retourne l'état de l'agent (son objectif, son action, son savoir)
-        :param test: est-ce qu'il existe un autre fantôme entre soi et pac man ?
-        :return:
-        """
-        a1 = ""
-        o1 = ""
-        if self.action == Action.gauche:
-            a1 = "aller à gauche"
-        elif self.action == Action.droite:
-            a1 = "aller à droite"
-        elif self.action == Action.monter:
-            a1 = "monter"
-        else:
-            a1 = "descendre"
-        if self.objectif == Objectif.chercher:
-            o1 = "chercher"
-        elif self.objectif == Objectif.sortir:
-            o1 = "sortir"
-        elif self.objectif == Objectif.fuir:
-            o1 = "fuir"
-        else:
-            o1 = "manger"
-        if test == False:
-            return str(self.nom) + " va " + a1 + " pour " + o1 + " sachant que Pac Man n'est pas suivi par un fantôme plus proche."
-        else:
-            return str(self.nom) + " va " + a1 + " pour " + o1 + " sachant que Pac Man est suivi par un fantôme plus proche."
 
     def bouger(self):
         while(self.arret):
-            {}
+            continue
         self.blackboard.ecrire_blackboard(self.name, self.action, self.objectif, self.x, self.y)
         if self.objectif == Objectif.chercher:
             self.action = self.chercher()  # cherche pacman
@@ -129,7 +102,6 @@ class Fantome:
                         if fantomes[i]["x"] == self.x and fantomes[i]["y"] < self.y:
                             test = True  # => oui
                         i += 1
-                    print(self.etat(test))
                     if not test:
                         return Action.descendre  # => non donc on descend
                     r = random.randint(0, 1)
@@ -160,7 +132,6 @@ class Fantome:
                         if fantomes[i]["x"] == self.x and fantomes[i]["y"] > self.y:
                             test = True  # => oui
                         i += 1
-                    print(self.etat(test))
                     if not test:
                         return Action.monter  # => non donc on monte
                     r = random.randint(0, 1)
@@ -192,7 +163,6 @@ class Fantome:
                         if fantomes[i]["y"] == self.y and fantomes[i]["x"] < self.x:
                             test = True  # => oui
                         i += 1
-                    print(self.etat(test))
                     if not test:
                         return Action.droite  # => non donc on va a droite
                     r = random.randint(0, 1)
@@ -223,7 +193,6 @@ class Fantome:
                         if fantomes[i]["y"] == self.y and fantomes[i]["x"] < self.x:
                             test = True  # => oui
                         i += 1
-                    print(self.etat(test))
                     if not test:
                         return Action.gauche  # => non donc on va a gauche
                     r = random.randint(0, 1)
