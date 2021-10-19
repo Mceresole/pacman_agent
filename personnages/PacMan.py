@@ -39,9 +39,12 @@ class PacMan:
         else:
             self.action = self.chercher()
         self.deplacer(self.action)  # effectue le déplacement
-        for i in range (len(self.fantomes)):
-            if self.fantomes[i].x == self.x and self.fantomes[i].y == self.y:
-                self.mourir()
+        if self.objectif == ObjectifPac.chercher:
+            for i in range (len(self.fantomes)):
+                if self.fantomes[i].x == self.x and self.fantomes[i].y == self.y:
+                    self.mourir()
+        elif self.objectif == ObjectifPac.attaquer:
+            self.tuer()
 
     
     # objectif: chercher pacman
@@ -138,23 +141,28 @@ class PacMan:
         for i in range(len(self.fantomes)):
             self.fantomes[i].arret = True
         self.arret = True
-
+        list = []
+        list.append("a")
         c = "      "
         if not self.cases[self.x][self.y].gauche:
             c += " gauche (q)        "
+            list.append("q")
         if not self.cases[self.x][self.y].droite:
             c += " droite (d)        "
+            list.append("d")
         if not self.cases[self.x][self.y].haut:
             c += " haut (z)        "
+            list.append("z")
         if not self.cases[self.x][self.y].bas:
             c += " bas (s)        "
+            list.append("s")
         c += " suicide (a)"
     
         print("Je suis bloqué, où dois-je aller ?")
         print(c)
 
         c = input()
-        while c not in ["q","d","z","s","a"]:
+        while c not in list :#["a","q","d","s","z"]:
             print("Je ne comprends pas. Où dois-je aller ?")
             c = "      "
             if not self.cases[self.x][self.y].gauche:
@@ -168,8 +176,9 @@ class PacMan:
             c += " suicide (a)"
             print(c)
             c = input()
+        
 
-        self.arret = False
+        self.arret = False        
         for i in range(len(self.fantomes)):
             self.fantomes[i].arret = False
         
@@ -182,11 +191,17 @@ class PacMan:
         if c == "s":
             return Action.descendre
         if c == "a":
+            for i in range(len(self.fantomes)):
+                self.fantomes[i].pasmanger = True
             self.suicide()
 
 
     def attaquer(self):
         test = False
+        gommeH = False
+        gommeB = False
+        gommeG = False
+        gommeD = False
         if not self.cases[self.x][self.y].gauche:
             gommeG = True
         if not self.cases[self.x][self.y].droite:
@@ -281,10 +296,10 @@ class PacMan:
                 self.statusPartie.set(Status.gagne.value)
 
     def tuer(self):
-        if self.objectif == ObjectifPac.chercher:
+        if self.objectif == ObjectifPac.attaquer:
             for i in range (len(self.fantomes)):
                 if self.fantomes[i].x == self.x and self.fantomes[i].y == self.y:
-                    self.fantomes[i].mourrir()
+                    self.fantomes[i].mourir()
 
     def mourir(self):
         self.background.delete(self.sprite)

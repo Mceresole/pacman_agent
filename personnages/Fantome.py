@@ -60,6 +60,7 @@ class Fantome:
         self.sprite = self.background.create_image(self.x * l + (3 * e), self.y * l + (3 * e), image=self.image)
         self.nom = nom
         self.arret = False
+        self.pasmanger = False
 
 
     def bouger(self):
@@ -75,7 +76,8 @@ class Fantome:
         else:
             self.action = self.chercher()
         self.deplacer(self.action)  # effectue le déplacement
-        self.tuer()  # essaye de tuer pacman
+        if not self.pasmanger:
+            self.tuer()  # essaye de tuer pacman
 
     # objectif: sortir de l'enclos
     def sortir(self):
