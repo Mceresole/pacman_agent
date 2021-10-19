@@ -177,6 +177,13 @@ class PacMan:
             print(c)
             c = input()
         
+        if c == "a":
+            self.arret = False        
+            for i in range(len(self.fantomes)):
+                self.fantomes[i].arret = False
+            for i in range(len(self.fantomes)):
+                self.fantomes[i].pasmanger = True
+            self.suicide()
 
         self.arret = False        
         for i in range(len(self.fantomes)):
@@ -190,10 +197,7 @@ class PacMan:
             return Action.monter
         if c == "s":
             return Action.descendre
-        if c == "a":
-            for i in range(len(self.fantomes)):
-                self.fantomes[i].pasmanger = True
-            self.suicide()
+       
 
 
     def attaquer(self):
